@@ -17,6 +17,7 @@ export const Header = () => {
             alignItems={"center"}
             h={"14"}
             w={"full"}
+            p={4}
         >
             <Flex>
                 <Text fontSize={"2xl"}>ClieCont</Text>

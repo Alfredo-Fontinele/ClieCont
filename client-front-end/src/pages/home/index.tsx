@@ -5,27 +5,45 @@ import {
     useMediaQuery,
     useColorMode,
 } from "@chakra-ui/react";
-import { Colors } from "../../styles/colors";
+import ImgPersonHome from "../../../src/assets/person-home.png";
 import { Header } from "./../../components/header/index";
 import { IconPerson } from "./icon-person/index";
+import { Colors } from "../../styles/colors";
+
+const styleImage = {
+    height: "400px",
+    minWidth: "350px",
+    backgroundSize: "cover",
+};
 
 export const Home = () => {
-    const [isLargerThan800] = useMediaQuery("(min-width: 820px)");
+    const [isLargerThan800] = useMediaQuery("(min-width: 768px)");
     const { colorMode } = useColorMode();
 
     return (
-        <Container w={"full"} maxW={"2000px"}>
-            <Flex w={"full"} minH={"100vh"} flexDir={"column"} gap={10}>
-                <Header />
+        <Container w={"full"} maxW={"8xl"}>
+            <Flex
+                w={"full"}
+                minH={"100vh"}
+                flexDir={"column"}
+                gap={10}
+                p={"8rem 0"}
+            >
                 {!isLargerThan800 && <IconPerson />}
                 <Flex
                     w={"full"}
-                    justifyContent="space-between"
+                    justifyContent="space-around"
                     gap={70}
                     zIndex={2}
-                    p={"2rem 5rem"}
+                    p={{ sm: 0, md: "1rem 5rem" }}
                 >
-                    <Flex flexDir={"column"} justifyContent="center" gap={30}>
+                    <Flex
+                        flexDir={"column"}
+                        justifyContent="center"
+                        gap={30}
+                        minW={"300px"}
+                        w={"full"}
+                    >
                         <Text fontSize={50} fontWeight={"bold"}>
                             Bem-vindo ao ClieCont
                         </Text>
@@ -46,14 +64,8 @@ export const Home = () => {
                     {!!isLargerThan800 && (
                         <Flex>
                             <img
-                                src={
-                                    "https://olirdesigns.com/wp-content/uploads/2021/06/ui-ux.png"
-                                }
-                                style={{
-                                    height: "400px",
-                                    minWidth: "400px",
-                                    backgroundSize: "cover",
-                                }}
+                                src={ImgPersonHome}
+                                style={styleImage}
                                 alt="logo"
                             />
                         </Flex>
