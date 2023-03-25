@@ -10,6 +10,8 @@ import "express-async-errors";
 
 export const clientRoutes = Router();
 
+clientRoutes.get("", ClientController.getAll);
+
 clientRoutes.post(
     "/login",
     validateSchema(loginClientSchema),

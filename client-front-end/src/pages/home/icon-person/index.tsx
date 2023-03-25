@@ -1,13 +1,7 @@
 import { Flex } from "@chakra-ui/react";
 import { useState } from "react";
-import { useSizeScreen } from "./../../../hooks/useSizeScreen";
 
 export const IconPerson = () => {
-    const { width, height } = useSizeScreen();
-    console.log({
-        width,
-        height,
-    });
     return (
         <Flex
             position={"fixed"}

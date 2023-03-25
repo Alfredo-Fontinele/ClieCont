@@ -2,11 +2,16 @@ import { HandlerError } from "./errors/handler-error";
 import { routes } from "./routes/_index.routes";
 import express from "express";
 import "express-async-errors";
-// import cors from "cors";
+import cors from "cors";
 
-export const app = express();
+const app = express();
 
 app.use(express.json());
-// app.use(cors());
+
+app.use(cors());
+
 app.use(routes);
+
 app.use(HandlerError);
+
+export { app };

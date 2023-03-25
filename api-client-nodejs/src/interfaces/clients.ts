@@ -4,14 +4,14 @@ export interface IClientCreateRequest {
     name: string;
     email: string;
     password: string;
-    phone: number;
+    phone: string;
 }
 
 export interface IClientCreateResponse {
     id: string;
     name: string;
     email: string;
-    phone: number;
+    phone: string;
     registered_date: Date;
     is_active: boolean;
     contacts: [];
@@ -29,7 +29,7 @@ export interface IRegisterRequest {
     name: string;
     email: string;
     password: string;
-    phone: number;
+    phone: string;
 }
 
 export interface ILoginRequest {

@@ -7,12 +7,12 @@
     "scripts": {
         "dev": "ts-node-dev --ignore-watch node_modules src/server.ts",
         "deploy": "yarn && yarn build && yarn typeorm migration:run -d dist/src/data-source.js",
-        "drop": "psql -U neto -d tests_products -c \"DROP DATABASE s1_m6\" \"exit\"",
-        "new": "psql -U neto -d tests_products -c \"CREATE DATABASE s1_m6\" \"exit\"",
+        "drop": "psql -U neto -d tests_products -c \"DROP DATABASE novo\" \"exit\"",
+        "new": "psql -U neto -d tests_products -c \"CREATE DATABASE novo\" \"exit\"",
         "typeorm": "typeorm-ts-node-commonjs",
         "build": "tsc",
-        "generate": "typeorm-ts-node-commonjs migration:generate -d src/data-source.ts src/migrations/createEntities",
-        "runner": "typeorm-ts-node-commonjs migration:run -d src/data-source.ts",
+        "generate": "typeorm-ts-node-commonjs migration:generate -d ./src/data-source.ts src/migrations/createEntities",
+        "runner": "typeorm-ts-node-commonjs migration:run -d ./src/data-source.ts",
         "test": "cross-env NODE_ENV=test SECRET_KEY=secret_key jest --verbose --runInBand",
         "start": "node dist/src/server.js"
     },

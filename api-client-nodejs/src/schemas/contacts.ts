@@ -9,6 +9,6 @@ export const createContactSchema = yup.object().shape({
 export const updateContactSchema = yup.object().shape({
     name: yup.string().notRequired(),
     email: yup.string().email().notRequired(),
-    phone: yup.number().notRequired(),
+    phone: yup.string().notRequired(),
     is_active: yup.boolean().notRequired(),
 });

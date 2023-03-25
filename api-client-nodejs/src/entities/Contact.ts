@@ -19,8 +19,8 @@ export class Contact {
     @Column()
     email: string;
 
-    @Column({ type: "numeric" })
-    phone: number;
+    @Column()
+    phone: string;
 
     @CreateDateColumn()
     registered_date: Date;

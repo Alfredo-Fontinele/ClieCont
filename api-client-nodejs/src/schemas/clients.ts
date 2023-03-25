@@ -4,7 +4,7 @@ export const registerClientSchema = yup.object().shape({
     name: yup.string().required(),
     email: yup.string().email().required(),
     password: yup.string().required(),
-    phone: yup.string().min(11).required(),
+    phone: yup.string().min(15).required(),
 });
 
 export const loginClientSchema = yup.object().shape({
@@ -16,6 +16,6 @@ export const updateClientSchema = yup.object().shape({
     name: yup.string().notRequired(),
     email: yup.string().email().notRequired(),
     password: yup.string().notRequired(),
-    phone: yup.number().notRequired(),
+    phone: yup.string().notRequired(),
     is_active: yup.boolean().notRequired(),
 });
