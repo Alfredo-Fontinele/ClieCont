@@ -1,4 +1,4 @@
-import { IItemMenuOptions } from "../../interfaces";
+import { IItemMenuOptions } from "../../interfaces/contacts";
 import { MenuItems } from "./../menu-items/index";
 import { Flex, Text } from "@chakra-ui/react";
 import { ThemeIcon } from "../theme-icon";

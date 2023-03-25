@@ -60,6 +60,7 @@ export const Login = () => {
                 dataBody
             );
             toast.success("Bem-vindo");
+            localStorage.setItem("ClieCont:token", JSON.stringify(data.token));
             navigate("/dashboard");
         } catch {
             toast.error("Ops! Algo deu errado");

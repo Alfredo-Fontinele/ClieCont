@@ -13,6 +13,9 @@ export const verifyClientIsSameClientLoggedById = async (
         throw new AppError("Missing authorization headers", 401);
     }
     const token = authToken.split(" ")[1];
+    if (!token) {
+        throw new AppError("Missing authorization token", 401);
+    }
     const secretKey = process.env.SECRET_KEY;
     if (!secretKey) {
         throw new AppError("Missing Secret Key", 403);

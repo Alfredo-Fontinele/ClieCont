@@ -1,5 +1,5 @@
 import { Box, useColorMode, useStyleConfig } from "@chakra-ui/react";
-import { IChildren } from "../interfaces";
+import { IChildren } from "../interfaces/contacts";
 import { Colors } from "./colors";
 
 export const GlobalStyle = ({ children }: IChildren) => {
