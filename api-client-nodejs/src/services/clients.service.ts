@@ -10,8 +10,8 @@ import {
     IClientUpdateRequest,
 } from "../interfaces/clients";
 import jwt from "jsonwebtoken";
-import "express-async-errors";
 import { updateClientSchema } from "./../schemas/clients";
+import "express-async-errors";
 
 export const ClientService = {
     async login(req: Request) {
