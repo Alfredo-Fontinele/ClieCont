@@ -11,9 +11,9 @@ import {
     useColorModeValue,
     VStack,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import { useState } from "react";
 import { BsPerson, BsPhone } from "react-icons/bs";
-import { MdEmail, MdOutlineEmail, MdPassword } from "react-icons/md";
+import { MdEmail, MdOutlineEmail } from "react-icons/md";
 import { PasswordField } from "../../components/password-field";
 import InputMask from "react-input-mask";
 import { useForm } from "react-hook-form";
@@ -21,7 +21,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Error } from "../../components/error";
 import { api } from "../../services/api";
 import { RegisterSchema } from "../../schemas/register.schema";
-import { maskPhone } from "../../utils/maskPhone";
 import { toast } from "react-toastify";
 import { useApi } from "../../context/api-context";
 
@@ -51,7 +50,6 @@ export const styleInputMaskPhone = {
 };
 
 export const Register = () => {
-    const [phone, setPhone] = useState("");
     const { navigate } = useApi();
 
     const onSubmitFormRegister = async (dataBody: any) => {
@@ -90,7 +88,7 @@ export const Register = () => {
             <Box
                 borderRadius="lg"
                 m={{ base: 5, md: 16, lg: 10 }}
-                p={{ base: 5, lg: 16 }}
+                p={{ base: 1, lg: 16 }}
                 w={"full"}
                 maxW={"600px"}
             >
@@ -111,7 +109,10 @@ export const Register = () => {
                         shadow="base"
                         w={"full"}
                     >
-                        <form onSubmit={handleSubmit(onSubmitFormRegister)}>
+                        <form
+                            onSubmit={handleSubmit(onSubmitFormRegister)}
+                            style={{ width: "100%" }}
+                        >
                             <VStack spacing={5}>
                                 <Flex flexDir={"column"} w={"full"}>
                                     <FormLabel>Nome</FormLabel>

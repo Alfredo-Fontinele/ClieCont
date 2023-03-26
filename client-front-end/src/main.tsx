@@ -1,11 +1,11 @@
 import { ToastContainerComponent } from "./components/toast-container";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { ApiProvider } from "./context/api-context";
 import { BodyConfigStyle } from "./styles/reset";
 import { BrowserRouter } from "react-router-dom";
 import ReactDOM from "react-dom/client";
 import { App } from "./App";
 import React from "react";
-import { ApiProvider } from "./context/api-context";
 
 const theme = extendTheme({
     components: {

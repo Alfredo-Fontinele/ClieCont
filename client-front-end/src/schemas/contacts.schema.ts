@@ -15,3 +15,13 @@ export const CreateContactSchema = yup.object().shape({
             "O padrão de celular não aceito."
         ),
 });
+
+export const UpdateContactSchema = yup.object().shape({
+    phone: yup
+        .string()
+        .notRequired()
+        .matches(
+            /\([[0-9]{2}\)\s9[0-9]{4}\-[0-9]{4}/gm,
+            "O padrão de celular não aceito."
+        ),
+});

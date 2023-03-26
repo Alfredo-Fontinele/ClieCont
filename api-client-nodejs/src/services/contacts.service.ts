@@ -48,14 +48,10 @@ export const ContactService = {
     },
     async update(req: Request): Promise<Contact> {
         const { id } = req.params;
-        const contact = await this.findContactById(id);
         const validatedData = await updateContactSchema.validate(req.body, {
             stripUnknown: true,
         });
-        await contactRepo.update(id, {
-            ...contact,
-            ...validatedData,
-        });
+        await contactRepo.update(id, validatedData);
         return await this.findContactById(id);
     },
     async delete(req: Request): Promise<UpdateResult> {

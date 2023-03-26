@@ -1,9 +1,15 @@
 import { Contact } from "../../../../../api-client-nodejs/src/entities/Contact";
-import { Flex, Image, Link, ListItem, Text } from "@chakra-ui/react";
-import { EmailIcon, PhoneIcon } from "@chakra-ui/icons";
+import {
+    Flex,
+    Image,
+    Link,
+    ListItem,
+    Text,
+    useColorMode,
+} from "@chakra-ui/react";
+import { EmailIcon, PhoneIcon, DragHandleIcon } from "@chakra-ui/icons";
 import { Colors } from "../../../styles/colors";
-import { BsPerson } from "react-icons/bs";
-import React from "react";
+import { formatPhoneNumber } from "../../../utils/formatPhoneNumber";
 
 interface ICardContactItemProps {
     contact: Contact;
@@ -20,6 +26,7 @@ export const CardContactItem = ({
     onClose,
     setContact,
 }: ICardContactItemProps) => {
+    const { colorMode } = useColorMode();
     return (
         <Flex
             onClick={() => {
@@ -30,6 +37,12 @@ export const CardContactItem = ({
             maxW={400}
         >
             <ListItem
+                bg={
+                    colorMode === "dark"
+                        ? Colors.chakra.gray700
+                        : Colors.menuItem
+                }
+                color={Colors.white_gray1}
                 display={"flex"}
                 textDecoration="none"
                 transition={"all 0.3s"}
@@ -48,21 +61,41 @@ export const CardContactItem = ({
                 onClick={() => onOpen()}
             >
                 <Flex alignItems={"center"} gap={5}>
-                    <BsPerson />
-                    <Text fontSize="large" fontWeight={"500"}>
-                        {contact.name}
+                    <DragHandleIcon />
+                    <Text
+                        fontSize="large"
+                        fontWeight={"500"}
+                        textOverflow={"ellipsis"}
+                        overflow={"hidden"}
+                        whiteSpace={"nowrap"}
+                    >
+                        {contact.name ?? "Nome Não Informado"}
                     </Text>
                 </Flex>
                 <Flex alignItems={"center"} gap={5}>
-                    <EmailIcon />
-                    <Text fontSize="large" fontWeight={"500"}>
-                        {contact.email}
+                    <EmailIcon color={Colors.main} />
+                    <Text
+                        fontSize="large"
+                        fontWeight={"500"}
+                        textOverflow={"ellipsis"}
+                        overflow={"hidden"}
+                        whiteSpace={"nowrap"}
+                    >
+                        {contact.email ?? "Sem E-mail"}
                     </Text>
                 </Flex>
                 <Flex alignItems={"center"} gap={5}>
-                    <PhoneIcon />
-                    <Text fontSize="large" fontWeight={"500"}>
-                        {contact.phone}
+                    <PhoneIcon color={Colors.spring} />
+                    <Text
+                        fontSize="large"
+                        fontWeight={"500"}
+                        textOverflow={"ellipsis"}
+                        overflow={"hidden"}
+                        whiteSpace={"nowrap"}
+                    >
+                        {contact.phone
+                            ? formatPhoneNumber(contact.phone)
+                            : "Telefone Não Informado"}
                     </Text>
                 </Flex>
             </ListItem>

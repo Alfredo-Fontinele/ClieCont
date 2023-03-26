@@ -12,9 +12,11 @@ interface IApiContext {
     contacts: Contact[];
     setContacts: React.Dispatch<React.SetStateAction<Contact[]>>;
     setUser: React.Dispatch<React.SetStateAction<Client | undefined>>;
-    getUserByToken: () => Promise<Client>;
+    getUserByTokenCookie: () => Promise<Client>;
     setToken: (token: string) => void;
     getToken: () => string;
+    updateContact: (dataBody: any, id: string, token: string) => Promise<any>;
+    getClient: (id: string, token: string) => Promise<any>;
 }
 
 const ApiContext = createContext<IApiContext>({} as IApiContext);
@@ -24,7 +26,7 @@ export const ApiProvider = ({ children }: IChildren) => {
     const [user, setUser] = useState<Client>();
     const navigate = useNavigate();
 
-    const getUserByToken = async () => {
+    const getUserByTokenCookie = async () => {
         const { token } = parseCookies();
         return await api
             .post("/clients/owner", { token })
@@ -44,17 +46,47 @@ export const ApiProvider = ({ children }: IChildren) => {
         });
     };
 
+    const updateContact = async (dataBody: any, id: string, token: string) => {
+        const { data: contactData } = await api.patch(
+            `/contacts/${id}`,
+            dataBody,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+        return contactData;
+    };
+
+    const getClient = async (id: string, token: string) => {
+        const { data: userData } = await api.get(`/clients/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return userData;
+    };
+
+    // const createContact = async (body: any) => {
+    //     return await api.post('/contacts', body)
+    //         .then(res => res.data)
+    //         .catch(err => )
+    // }
+
     return (
         <ApiContext.Provider
             value={{
                 navigate,
-                getUserByToken,
+                getUserByTokenCookie,
                 setToken,
                 getToken,
                 user,
                 setUser,
                 contacts,
                 setContacts,
+                updateContact,
+                getClient,
             }}
         >
             {children}

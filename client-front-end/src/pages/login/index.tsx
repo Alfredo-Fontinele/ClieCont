@@ -18,7 +18,6 @@ import { PasswordField } from "../../components/password-field";
 import { LoginSchema } from "../../schemas/login.schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useApi } from "../../context/api-context";
-import { maskPhone } from "../../utils/maskPhone";
 import { Error } from "../../components/error";
 import { useForm } from "react-hook-form";
 import InputMask from "react-input-mask";
@@ -52,11 +51,11 @@ const styleInputMaskPhone = {
 };
 
 export const Login = () => {
-    const { navigate, getUserByToken } = useApi();
+    const { navigate, getUserByTokenCookie } = useApi();
 
     useEffect(() => {
         (async () => {
-            await getUserByToken().then(() => navigate("/dashboard"));
+            await getUserByTokenCookie().then(() => navigate("/dashboard"));
         })();
     }, []);
 

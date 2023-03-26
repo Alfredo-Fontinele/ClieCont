@@ -45,7 +45,8 @@ export const Home = () => {
                         w={"full"}
                     >
                         <Text fontSize={50} fontWeight={"bold"}>
-                            Bem-vindo ao ClieCont
+                            Bem-vindo ao
+                            <Text color={Colors.main}>ClieCont</Text>
                         </Text>
                         <Text
                             lineHeight={8}
