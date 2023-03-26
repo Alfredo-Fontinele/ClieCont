@@ -11,7 +11,7 @@ import {
     useColorModeValue,
     VStack,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BsPerson, BsPhone } from "react-icons/bs";
 import { MdEmail, MdOutlineEmail, MdPassword } from "react-icons/md";
 import { PasswordField } from "../../components/password-field";
@@ -52,7 +52,13 @@ const styleInputMaskPhone = {
 };
 
 export const Login = () => {
-    const { navigate } = useApi();
+    const { navigate, getUserByToken } = useApi();
+
+    useEffect(() => {
+        (async () => {
+            await getUserByToken().then(() => navigate("/dashboard"));
+        })();
+    }, []);
 
     const onSubmitFormLogin = async (dataBody: any) => {
         try {

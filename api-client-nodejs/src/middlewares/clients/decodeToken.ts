@@ -1,11 +1,11 @@
+import { clientRepo } from "./../../repositories/client-repo";
 import { AppError } from "./../../errors/app-error";
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { clientRepo } from "./../../repositories/client-repo";
 
 export const decodeToken = async (req: Request, res: Response) => {
-    const { token } = await req.body;
-    const clientToken = jwt.decode(token);
+    const body = await req.body;
+    const clientToken = jwt.decode(body.token);
     if (!clientToken) {
         throw new AppError("Invalid Token");
     }

@@ -4,18 +4,23 @@ import { IChildren } from "./../interfaces/others";
 import { parseCookies, setCookie } from "nookies";
 import { useNavigate } from "react-router-dom";
 import { api } from "../services/api";
+import { Contact } from "./../../../api-client-nodejs/src/entities/Contact";
 
 interface IApiContext {
     navigate: (to: string) => void;
     user: Client | undefined;
+    contacts: Contact[];
+    setContacts: React.Dispatch<React.SetStateAction<Contact[]>>;
     setUser: React.Dispatch<React.SetStateAction<Client | undefined>>;
     getUserByToken: () => Promise<Client>;
     setToken: (token: string) => void;
+    getToken: () => string;
 }
 
 const ApiContext = createContext<IApiContext>({} as IApiContext);
 
 export const ApiProvider = ({ children }: IChildren) => {
+    const [contacts, setContacts] = useState<Contact[]>([]);
     const [user, setUser] = useState<Client>();
     const navigate = useNavigate();
 
@@ -25,6 +30,11 @@ export const ApiProvider = ({ children }: IChildren) => {
             .post("/clients/owner", { token })
             .then((res) => res.data)
             .catch(() => false);
+    };
+
+    const getToken = () => {
+        const { token } = parseCookies();
+        return token;
     };
 
     const setToken = (token: string) => {
@@ -40,8 +50,11 @@ export const ApiProvider = ({ children }: IChildren) => {
                 navigate,
                 getUserByToken,
                 setToken,
+                getToken,
                 user,
                 setUser,
+                contacts,
+                setContacts,
             }}
         >
             {children}
