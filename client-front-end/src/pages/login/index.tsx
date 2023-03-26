@@ -15,15 +15,16 @@ import React, { useState } from "react";
 import { BsPerson, BsPhone } from "react-icons/bs";
 import { MdEmail, MdOutlineEmail, MdPassword } from "react-icons/md";
 import { PasswordField } from "../../components/password-field";
-import InputMask from "react-input-mask";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { Error } from "../../components/error";
-import { api } from "../../services/api";
-import { maskPhone } from "../../utils/maskPhone";
-import { toast } from "react-toastify";
-import { useApi } from "../../context/api-context";
 import { LoginSchema } from "../../schemas/login.schema";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useApi } from "../../context/api-context";
+import { maskPhone } from "../../utils/maskPhone";
+import { Error } from "../../components/error";
+import { useForm } from "react-hook-form";
+import InputMask from "react-input-mask";
+import { api } from "../../services/api";
+import { toast } from "react-toastify";
+import { setCookie } from "nookies";
 
 const confetti = {
     light: {
@@ -55,12 +56,12 @@ export const Login = () => {
 
     const onSubmitFormLogin = async (dataBody: any) => {
         try {
-            const { data } = await api.post(
-                "http://localhost:3333/clients/login",
-                dataBody
-            );
+            const { data } = await api.post("/clients/login", dataBody);
             toast.success("Bem-vindo");
-            localStorage.setItem("ClieCont:token", JSON.stringify(data.token));
+            setCookie(null, "token", data.token, {
+                maxAge: 30 * 24 * 60 * 60,
+                path: "/",
+            });
             navigate("/dashboard");
         } catch {
             toast.error("Ops! Algo deu errado");

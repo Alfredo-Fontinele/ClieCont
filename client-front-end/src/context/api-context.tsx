@@ -1,30 +1,47 @@
-import { AxiosResponse } from "axios";
-import { createContext, useContext } from "react";
+import { Client } from "../../../api-client-nodejs/src/entities/Client";
+import { createContext, useContext, useState } from "react";
+import { IChildren } from "./../interfaces/others";
+import { parseCookies, setCookie } from "nookies";
 import { useNavigate } from "react-router-dom";
 import { api } from "../services/api";
-import { IChildren } from "./../interfaces/others";
 
 interface IApiContext {
     navigate: (to: string) => void;
-    getUserInfoByToken: (token: string) => Promise<AxiosResponse<any, any>>;
+    user: Client | undefined;
+    setUser: React.Dispatch<React.SetStateAction<Client | undefined>>;
+    getUserByToken: () => Promise<Client>;
+    setToken: (token: string) => void;
 }
 
 const ApiContext = createContext<IApiContext>({} as IApiContext);
 
 export const ApiProvider = ({ children }: IChildren) => {
+    const [user, setUser] = useState<Client>();
     const navigate = useNavigate();
-    const getUserInfoByToken = async (token: string) => {
-        return await api.get("/clients/owner", {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
+
+    const getUserByToken = async () => {
+        const { token } = parseCookies();
+        return await api
+            .post("/clients/owner", { token })
+            .then((res) => res.data)
+            .catch(() => false);
+    };
+
+    const setToken = (token: string) => {
+        setCookie(null, "token", token, {
+            maxAge: 30 * 24 * 60 * 60,
+            path: "/",
         });
     };
+
     return (
         <ApiContext.Provider
             value={{
                 navigate,
-                getUserInfoByToken,
+                getUserByToken,
+                setToken,
+                user,
+                setUser,
             }}
         >
             {children}

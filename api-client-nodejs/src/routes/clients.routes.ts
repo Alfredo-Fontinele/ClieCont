@@ -1,11 +1,16 @@
 import { verifyClientIsSameClientLoggedById } from "./../middlewares/clients/verifyClientIsSameClientLoggedById";
 import { verifyNotExistClientByEmail } from "../middlewares/clients/verifyNotExistClientByEmail";
+import {
+    getTokenSchema,
+    loginClientSchema,
+    registerClientSchema,
+} from "./../schemas/clients";
 import { verifyAlreadyExistClient } from "../middlewares/clients/verifyAlreadyExistClient";
 import { verifyNotExistClientById } from "../middlewares/clients/verifyNotExistClientById";
 import { verifyClientIsLogged } from "./../middlewares/clients/verifyClientIsLogged";
-import { loginClientSchema, registerClientSchema } from "./../schemas/clients";
 import { validateSchema } from "../middlewares/validators/validateSchema";
 import { ClientController } from "../controllers/client.controller";
+import { decodeToken } from "./../middlewares/clients/decodeToken";
 import { Router } from "express";
 import "express-async-errors";
 
@@ -41,7 +46,7 @@ clientRoutes.get(
     ClientController.getById
 );
 
-clientRoutes.get("/owner", verifyClientIsLogged, ClientController.getByToken);
+clientRoutes.post("/owner", validateSchema(getTokenSchema), decodeToken);
 
 clientRoutes.delete(
     "/:id",

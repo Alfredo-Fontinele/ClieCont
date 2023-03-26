@@ -19,3 +19,7 @@ export const updateClientSchema = yup.object().shape({
     phone: yup.string().notRequired(),
     is_active: yup.boolean().notRequired(),
 });
+
+export const getTokenSchema = yup.object().shape({
+    token: yup.string().required(),
+});

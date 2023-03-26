@@ -1,37 +1,38 @@
+import { Container, Flex, List, ListItem, Text } from "@chakra-ui/react";
+import { CardContactItem } from "./card-contact-item/index";
 import { useApi } from "../../context/api-context";
-import { useEffect, useState } from "react";
-import { api } from "../../services/api";
-import { Client } from "./../../../../api-client-nodejs/src/entities/Client";
+import { useEffect } from "react";
 
 export const Dashboard = () => {
-    const { navigate } = useApi();
-    const [user, setUser] = useState<Client>();
+    const { navigate, getUserByToken, setUser, user } = useApi();
 
     useEffect(() => {
         (async () => {
-            const token = localStorage.getItem("ClieCont:token");
-            if (!token) {
-                navigate("/");
+            const userFound = await getUserByToken();
+            if (!userFound) {
+                navigate("/login");
                 return;
             }
-            let teste = token.replaceAll('"', "");
-            const { data } = await api.get("/clients/owner", {
-                headers: {
-                    Authorization: `Bearer ${teste}`,
-                },
-            });
-            console.log(data);
-            // if (!data.) {
-            //     navigate("/login");
-            // }
-            // setUser(userFound);
+            setUser(userFound);
         })();
     }, []);
 
     return (
-        <>
-            <h1>Dashboard</h1>
-            <div>Olá {user?.name}</div>
-        </>
+        <Container w={"full"} maxW={"8xl"} minH={"100vh"}>
+            <Flex w={"full"} p={6} flexDir={"column"} gap={10}>
+                <Text fontWeight={500} fontSize={30}>
+                    Olá {user?.name}
+                </Text>
+                <List>
+                    {!!user &&
+                        user.contacts?.map(
+                            (contact) =>
+                                !!contact.is_active && (
+                                    <CardContactItem contact={contact} />
+                                )
+                        )}
+                </List>
+            </Flex>
+        </Container>
     );
 };

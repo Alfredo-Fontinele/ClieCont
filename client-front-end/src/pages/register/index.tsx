@@ -56,10 +56,7 @@ export const Register = () => {
 
     const onSubmitFormRegister = async (dataBody: any) => {
         try {
-            const { data } = await api.post(
-                "http://localhost:3333/clients/",
-                dataBody
-            );
+            const { data } = await api.post("/clients/", dataBody);
             toast.success("Conta Criada com Sucesso");
             navigate("/login");
         } catch {
