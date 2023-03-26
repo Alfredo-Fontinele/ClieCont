@@ -17,12 +17,19 @@ interface IApiContext {
     getToken: () => string;
     updateContact: (dataBody: any, id: string, token: string) => Promise<any>;
     getClient: (id: string, token: string) => Promise<any>;
+    createContact: (body: any) => Promise<any>;
+    deleteContact: (id: string, token: string) => Promise<any>;
+    currentContact: Contact | undefined;
+    setCurrentContact: React.Dispatch<
+        React.SetStateAction<Contact | undefined>
+    >;
 }
 
 const ApiContext = createContext<IApiContext>({} as IApiContext);
 
 export const ApiProvider = ({ children }: IChildren) => {
     const [contacts, setContacts] = useState<Contact[]>([]);
+    const [currentContact, setCurrentContact] = useState<Contact>();
     const [user, setUser] = useState<Client>();
     const navigate = useNavigate();
 
@@ -46,6 +53,20 @@ export const ApiProvider = ({ children }: IChildren) => {
         });
     };
 
+    const getClient = async (id: string, token: string) => {
+        const { data: userData } = await api.get(`/clients/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return userData;
+    };
+
+    const createContact = async (body: any) => {
+        const { data } = await api.post("/contacts", body);
+        return data;
+    };
+
     const updateContact = async (dataBody: any, id: string, token: string) => {
         const { data: contactData } = await api.patch(
             `/contacts/${id}`,
@@ -59,20 +80,13 @@ export const ApiProvider = ({ children }: IChildren) => {
         return contactData;
     };
 
-    const getClient = async (id: string, token: string) => {
-        const { data: userData } = await api.get(`/clients/${id}`, {
+    const deleteContact = async (id: string, token: string) => {
+        return await api.delete(`/contacts/${id}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         });
-        return userData;
     };
-
-    // const createContact = async (body: any) => {
-    //     return await api.post('/contacts', body)
-    //         .then(res => res.data)
-    //         .catch(err => )
-    // }
 
     return (
         <ApiContext.Provider
@@ -87,6 +101,10 @@ export const ApiProvider = ({ children }: IChildren) => {
                 setContacts,
                 updateContact,
                 getClient,
+                createContact,
+                deleteContact,
+                currentContact,
+                setCurrentContact,
             }}
         >
             {children}

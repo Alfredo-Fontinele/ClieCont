@@ -10,13 +10,13 @@ import {
 import { EmailIcon, PhoneIcon, DragHandleIcon } from "@chakra-ui/icons";
 import { Colors } from "../../../styles/colors";
 import { formatPhoneNumber } from "../../../utils/formatPhoneNumber";
+import { useApi } from "../../../context/api-context";
 
 interface ICardContactItemProps {
     contact: Contact;
     isOpen: boolean;
     onOpen: Function;
     onClose: Function;
-    setContact: Function;
 }
 
 export const CardContactItem = ({
@@ -24,14 +24,13 @@ export const CardContactItem = ({
     isOpen,
     onOpen,
     onClose,
-    setContact,
 }: ICardContactItemProps) => {
+    const { setCurrentContact } = useApi();
     const { colorMode } = useColorMode();
     return (
         <Flex
             onClick={() => {
-                setContact(contact);
-                console.log(contact);
+                setCurrentContact(contact);
             }}
             w="full"
             maxW={400}

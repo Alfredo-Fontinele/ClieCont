@@ -20,7 +20,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useApi } from "../../context/api-context";
 import { Error } from "../../components/error";
 import { useForm } from "react-hook-form";
-import InputMask from "react-input-mask";
 import { api } from "../../services/api";
 import { toast } from "react-toastify";
 import { setCookie } from "nookies";

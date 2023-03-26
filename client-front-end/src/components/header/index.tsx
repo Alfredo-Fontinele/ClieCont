@@ -3,6 +3,7 @@ import { MenuItems } from "./../menu-items/index";
 import { Flex, Text } from "@chakra-ui/react";
 import { ThemeIcon } from "../theme-icon";
 import { Link } from "react-router-dom";
+import { Colors } from "../../styles/colors";
 
 const optionsHeader: IItemMenuOptions[] = [
     { name: "Home", href: "/" },
@@ -20,7 +21,9 @@ export const Header = () => {
             p={4}
         >
             <Flex>
-                <Text fontSize={"2xl"}>ClieCont</Text>
+                <Text fontSize={"2xl"} fontWeight={"bold"} color={Colors.main}>
+                    ClieCont
+                </Text>
             </Flex>
             <Flex
                 justifyContent={"space-between"}

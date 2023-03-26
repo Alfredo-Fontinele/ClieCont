@@ -5,6 +5,7 @@ import {
     Input,
     InputGroup,
     InputLeftElement,
+    useDisclosure,
     VStack,
 } from "@chakra-ui/react";
 import { api } from "../../../services/api";
@@ -20,13 +21,20 @@ import { useApi } from "../../../context/api-context";
 import { removeFalseValues } from "../../../utils/removeFalseValues";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { UpdateContactSchema } from "../../../schemas/contacts.schema";
+import { useState } from "react";
+import { IContactCreateRequest } from "./../../../../../api-client-nodejs/src/interfaces/contacts";
+import { Colors } from "../../../styles/colors";
 
 interface IFormUpdateProps {
     id: string;
 }
 
 export const FormUpdate = ({ id }: IFormUpdateProps) => {
-    const { getToken, setUser, updateContact, getClient } = useApi();
+    const { getToken, setUser, updateContact, getClient, currentContact } =
+        useApi();
+    const [wantExclude, setWantExclude] = useState(false);
+    const { onClose } = useDisclosure();
+
     const onSubmitFormUpdate = async (dataBody: any) => {
         try {
             const token = getToken();
@@ -38,6 +46,7 @@ export const FormUpdate = ({ id }: IFormUpdateProps) => {
             );
             setUser(clientFound);
             toast.success("Contato Atualizado com Sucesso");
+            () => onClose();
         } catch {
             toast.error("Ops. Algo deu errado");
         }
@@ -65,6 +74,7 @@ export const FormUpdate = ({ id }: IFormUpdateProps) => {
                             <InputLeftElement children={<BsPerson />} />
                             <Input
                                 type="text"
+                                defaultValue={currentContact?.name}
                                 placeholder="Insira seu nome"
                                 {...register("name")}
                             />
@@ -78,6 +88,7 @@ export const FormUpdate = ({ id }: IFormUpdateProps) => {
                             <InputLeftElement children={<MdOutlineEmail />} />
                             <Input
                                 type="email"
+                                defaultValue={currentContact?.email}
                                 placeholder="Insira seu email"
                                 {...register("email")}
                             />
@@ -85,25 +96,20 @@ export const FormUpdate = ({ id }: IFormUpdateProps) => {
                     </Flex>
 
                     <Flex flexDir={"column"} w={"full"}>
-                        <FormLabel>Senha</FormLabel>
-                        <PasswordField {...register("password")} />
-                    </Flex>
-
-                    <Flex flexDir={"column"} w={"full"}>
                         <FormLabel>Celular</FormLabel>
                         <InputGroup>
                             <InputLeftElement children={<BsPhone />} />
                             <InputMask
+                                defaultValue={currentContact?.phone}
                                 {...register("phone")}
                                 mask="(99) 99999-9999"
                                 style={styleInputMaskPhone}
                                 placeholder={"Insira seu número"}
                             />
                         </InputGroup>
-                        {errors.phone && <Error text={errors.phone.message} />}
                     </Flex>
                 </Flex>
-                <Flex gap={10}>
+                <Flex justifyContent={"center"} gap={10}>
                     <Button
                         colorScheme="blue"
                         bg="blue.400"
@@ -113,16 +119,27 @@ export const FormUpdate = ({ id }: IFormUpdateProps) => {
                         }}
                         type={"submit"}
                     >
-                        Atualizar Contato
+                        Atualizar
                     </Button>
-                    <Button
-                        bg="red.400"
-                        color="white"
-                        type={"button"}
-                        onClick={() => console.log("OI")}
-                    >
-                        Remover Contato
-                    </Button>
+                    {!wantExclude ? (
+                        <Button
+                            bg="red.400"
+                            color="white"
+                            type={"button"}
+                            onClick={() => setWantExclude(true)}
+                        >
+                            Excluir
+                        </Button>
+                    ) : (
+                        <Button
+                            bg={Colors.main}
+                            color="white"
+                            type={"button"}
+                            onClick={() => console.log("OI")}
+                        >
+                            Confirmar !
+                        </Button>
+                    )}
                 </Flex>
             </Flex>
         </form>

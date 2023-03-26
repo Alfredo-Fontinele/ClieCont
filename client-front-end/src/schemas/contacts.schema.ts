@@ -17,9 +17,11 @@ export const CreateContactSchema = yup.object().shape({
 });
 
 export const UpdateContactSchema = yup.object().shape({
+    email: yup.string().email("email precisa ser um campo válido"),
+    password: yup.string(),
+    name: yup.string(),
     phone: yup
         .string()
-        .notRequired()
         .matches(
             /\([[0-9]{2}\)\s9[0-9]{4}\-[0-9]{4}/gm,
             "O padrão de celular não aceito."

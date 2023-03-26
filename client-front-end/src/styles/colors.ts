@@ -5,6 +5,7 @@ export const Colors = {
     darkBlue: "rgb(20, 40, 70)",
     main: "#d6873c",
     menuItem: "#292b3c",
+    redLight: "#FF0000",
     blueLight: "rgb(29, 109, 238)",
     slate: "mediumslateblue",
     spring: "mediumspringgreen",
