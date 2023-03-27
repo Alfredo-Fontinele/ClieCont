@@ -8,10 +8,10 @@ import {
     ModalOverlay,
     Text,
 } from "@chakra-ui/react";
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import { Contact } from "../../../../../api-client-nodejs/src/entities/Contact";
-import { useApi } from "../../../context/api-context";
 import { IModalProps } from "../../../interfaces/others";
+import { useApi } from "../../../context/api-context";
 import { Colors } from "../../../styles/colors";
 import { FormUpdate } from "../form-update";
 import { toast } from "react-toastify";

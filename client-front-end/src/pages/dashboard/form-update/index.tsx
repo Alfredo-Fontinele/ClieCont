@@ -5,28 +5,17 @@ import {
     Input,
     InputGroup,
     InputLeftElement,
-    useDisclosure,
-    VStack,
 } from "@chakra-ui/react";
-import { api } from "../../../services/api";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { BsPerson, BsPhone } from "react-icons/bs";
-import { Error } from "../../../components/error";
 import { MdOutlineEmail } from "react-icons/md";
-import { PasswordField } from "../../../components/password-field";
 import { styleInputMaskPhone } from "../../register";
 import InputMask from "react-input-mask";
 import { useApi } from "../../../context/api-context";
 import { removeFalseValues } from "../../../utils/removeFalseValues";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { UpdateContactSchema } from "../../../schemas/contacts.schema";
-import { useEffect, useState } from "react";
-import {
-    IContactCreateRequest,
-    IContactUpdateRequest,
-} from "./../../../../../api-client-nodejs/src/interfaces/contacts";
-import { Colors } from "../../../styles/colors";
 
 interface IFormUpdateProps {
     id: string;

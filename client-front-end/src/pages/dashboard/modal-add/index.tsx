@@ -8,7 +8,6 @@ import {
     ModalOverlay,
     Text,
 } from "@chakra-ui/react";
-import { Contact } from "../../../../../api-client-nodejs/src/entities/Contact";
 import { IModalProps } from "../../../interfaces/others";
 import { FormAdd } from "../form-add";
 
