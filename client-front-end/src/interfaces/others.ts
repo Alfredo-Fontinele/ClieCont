@@ -7,7 +7,7 @@ export interface IChildren {
 export interface IItemMenuOptions {
     name: string;
     href: string;
-    onClick?: Function;
+    onClick: Function;
 }
 
 export interface IModalProps {

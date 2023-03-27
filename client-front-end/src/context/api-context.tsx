@@ -2,10 +2,13 @@ import { Client } from "../../../api-client-nodejs/src/entities/Client";
 import { Contact } from "../../../api-client-nodejs/src/entities/Contact";
 import { createContext, useContext, useState } from "react";
 import { IChildren } from "./../interfaces/others";
-import { parseCookies, setCookie } from "nookies";
+import { parseCookies, setCookie, destroyCookie } from "nookies";
 import { useNavigate } from "react-router-dom";
 import { api } from "../services/api";
-import { IContactCreateRequest } from "../interfaces/contacts";
+import {
+    IContactCreateRequest,
+    IContactUpdateRequest,
+} from "../interfaces/contacts";
 
 interface IApiContext {
     navigate: (to: string) => void;
@@ -16,6 +19,7 @@ interface IApiContext {
     getUserByTokenCookie: () => Promise<Client>;
     setToken: (token: string) => void;
     getToken: () => string;
+    deleteToken: () => void;
     updateContact: (
         dataBody: any,
         id: string,
@@ -23,16 +27,19 @@ interface IApiContext {
     ) => Promise<Contact>;
     getClient: (id: string, token: string) => Promise<Client>;
     createContact: (body: any, token: string) => Promise<Contact>;
-    deleteContact: (id: string, token: string) => Promise<any>;
+    deleteContact: (id: string, token: string) => Promise<Contact>;
     currentContact: Contact | undefined;
     setCurrentContact: React.Dispatch<
         React.SetStateAction<Contact | undefined>
     >;
+    currentPage: string;
+    setCurrentPage: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const ApiContext = createContext<IApiContext>({} as IApiContext);
 
 export const ApiProvider = ({ children }: IChildren) => {
+    const [currentPage, setCurrentPage] = useState(document.title);
     const [contacts, setContacts] = useState<Contact[]>([]);
     const [currentContact, setCurrentContact] = useState<Contact>();
     const [user, setUser] = useState<Client>();
@@ -49,6 +56,13 @@ export const ApiProvider = ({ children }: IChildren) => {
     const getToken = () => {
         const { token } = parseCookies();
         return token;
+    };
+
+    const deleteToken = () => {
+        const { token } = parseCookies();
+        if (token) {
+            destroyCookie(null, "token");
+        }
     };
 
     const setToken = (token: string) => {
@@ -79,7 +93,11 @@ export const ApiProvider = ({ children }: IChildren) => {
         return data;
     };
 
-    const updateContact = async (dataBody: any, id: string, token: string) => {
+    const updateContact = async (
+        dataBody: IContactUpdateRequest,
+        id: string,
+        token: string
+    ): Promise<Contact> => {
         const { data: contactData } = await api.patch(
             `/contacts/${id}`,
             dataBody,
@@ -92,7 +110,10 @@ export const ApiProvider = ({ children }: IChildren) => {
         return contactData;
     };
 
-    const deleteContact = async (id: string, token: string) => {
+    const deleteContact = async (
+        id: string,
+        token: string
+    ): Promise<Contact> => {
         return await api.delete(`/contacts/${id}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -107,6 +128,7 @@ export const ApiProvider = ({ children }: IChildren) => {
                 getUserByTokenCookie,
                 setToken,
                 getToken,
+                deleteToken,
                 user,
                 setUser,
                 contacts,
@@ -117,6 +139,8 @@ export const ApiProvider = ({ children }: IChildren) => {
                 deleteContact,
                 currentContact,
                 setCurrentContact,
+                currentPage,
+                setCurrentPage,
             }}
         >
             {children}

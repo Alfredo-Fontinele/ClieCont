@@ -1,5 +1,4 @@
 import { Client } from "./../../../api-client-nodejs/src/entities/Client";
-import { IClientCreateResponse } from "./clients";
 
 export interface IContactCreateRequest {
     name: string;
@@ -18,7 +17,7 @@ export interface IContactCreateResponse {
     name: string;
     email: string;
     phone: string;
-    client: IClientCreateResponse;
+    client: Client;
     registered_date: Date;
     is_active: boolean;
 }

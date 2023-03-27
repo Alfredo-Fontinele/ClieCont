@@ -14,7 +14,7 @@ export interface IClientCreateResponse {
     phone: string;
     registered_date: Date;
     is_active: boolean;
-    contacts: [];
+    contacts: Contact[];
 }
 
 export interface IClientUpdateRequest {

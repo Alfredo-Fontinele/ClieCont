@@ -23,6 +23,7 @@ import { api } from "../../services/api";
 import { RegisterSchema } from "../../schemas/register.schema";
 import { toast } from "react-toastify";
 import { useApi } from "../../context/api-context";
+import { motion } from "framer-motion";
 
 const confetti = {
     light: {
@@ -51,6 +52,7 @@ export const styleInputMaskPhone = {
 
 export const Register = () => {
     const { navigate } = useApi();
+    document.title = "Register";
 
     const onSubmitFormRegister = async (dataBody: any) => {
         try {
@@ -109,86 +111,101 @@ export const Register = () => {
                         shadow="base"
                         w={"full"}
                     >
-                        <form
-                            onSubmit={handleSubmit(onSubmitFormRegister)}
-                            style={{ width: "100%" }}
+                        <motion.ul
+                            initial={{ y: 50, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
                         >
-                            <VStack spacing={5}>
-                                <Flex flexDir={"column"} w={"full"}>
-                                    <FormLabel>Nome</FormLabel>
+                            <form
+                                onSubmit={handleSubmit(onSubmitFormRegister)}
+                                style={{ width: "100%" }}
+                            >
+                                <VStack spacing={5}>
+                                    <Flex flexDir={"column"} w={"full"}>
+                                        <FormLabel>Nome</FormLabel>
 
-                                    <InputGroup>
-                                        <InputLeftElement
-                                            children={<BsPerson />}
-                                        />
-                                        <Input
-                                            type="text"
-                                            placeholder="Your Name"
-                                            {...register("name")}
-                                        />
-                                    </InputGroup>
-                                    {errors.name && (
-                                        <Error text={errors.name.message} />
-                                    )}
-                                </Flex>
+                                        <InputGroup>
+                                            <InputLeftElement
+                                                children={<BsPerson />}
+                                            />
+                                            <Input
+                                                type="text"
+                                                placeholder="Your Name"
+                                                {...register("name")}
+                                            />
+                                        </InputGroup>
+                                        {errors.name && (
+                                            <Error text={errors.name.message} />
+                                        )}
+                                    </Flex>
 
-                                <Flex flexDir={"column"} w={"full"}>
-                                    <FormLabel>Email</FormLabel>
+                                    <Flex flexDir={"column"} w={"full"}>
+                                        <FormLabel>Email</FormLabel>
 
-                                    <InputGroup>
-                                        <InputLeftElement
-                                            children={<MdOutlineEmail />}
-                                        />
-                                        <Input
-                                            type="email"
-                                            placeholder="Insira seu email"
-                                            {...register("email")}
-                                        />
-                                    </InputGroup>
-                                    {errors.email && (
-                                        <Error text={errors.email.message} />
-                                    )}
-                                </Flex>
+                                        <InputGroup>
+                                            <InputLeftElement
+                                                children={<MdOutlineEmail />}
+                                            />
+                                            <Input
+                                                type="email"
+                                                placeholder="Insira seu email"
+                                                {...register("email")}
+                                            />
+                                        </InputGroup>
+                                        {errors.email && (
+                                            <Error
+                                                text={errors.email.message}
+                                            />
+                                        )}
+                                    </Flex>
 
-                                <Flex flexDir={"column"} w={"full"}>
-                                    <FormLabel>Senha</FormLabel>
-                                    <PasswordField {...register("password")} />
-                                    {errors.password && (
-                                        <Error text={errors.password.message} />
-                                    )}
-                                </Flex>
-
-                                <Flex flexDir={"column"} w={"full"}>
-                                    <FormLabel>Celular</FormLabel>
-                                    <InputGroup>
-                                        <InputLeftElement
-                                            children={<BsPhone />}
+                                    <Flex flexDir={"column"} w={"full"}>
+                                        <FormLabel>Senha</FormLabel>
+                                        <PasswordField
+                                            {...register("password")}
                                         />
-                                        <InputMask
-                                            {...register("phone")}
-                                            mask="(99) 99999-9999"
-                                            style={styleInputMaskPhone}
-                                            placeholder={"Insira seu número"}
-                                        />
-                                    </InputGroup>
-                                    {errors.phone && (
-                                        <Error text={errors.phone.message} />
-                                    )}
-                                </Flex>
+                                        {errors.password && (
+                                            <Error
+                                                text={errors.password.message}
+                                            />
+                                        )}
+                                    </Flex>
 
-                                <Button
-                                    colorScheme="blue"
-                                    bg="blue.400"
-                                    color="white"
-                                    _hover={{
-                                        bg: "blue.500",
-                                    }}
-                                    type={"submit"}
-                                >
-                                    Cadastrar
-                                </Button>
-                            </VStack>
-                        </form>
+                                    <Flex flexDir={"column"} w={"full"}>
+                                        <FormLabel>Celular</FormLabel>
+                                        <InputGroup>
+                                            <InputLeftElement
+                                                children={<BsPhone />}
+                                            />
+                                            <InputMask
+                                                {...register("phone")}
+                                                mask="(99) 99999-9999"
+                                                style={styleInputMaskPhone}
+                                                placeholder={
+                                                    "Insira seu número"
+                                                }
+                                            />
+                                        </InputGroup>
+                                        {errors.phone && (
+                                            <Error
+                                                text={errors.phone.message}
+                                            />
+                                        )}
+                                    </Flex>
+
+                                    <Button
+                                        colorScheme="blue"
+                                        bg="blue.400"
+                                        color="white"
+                                        _hover={{
+                                            bg: "blue.500",
+                                        }}
+                                        type={"submit"}
+                                    >
+                                        Cadastrar
+                                    </Button>
+                                </VStack>
+                            </form>
+                        </motion.ul>
                     </Box>
                 </Flex>
             </Box>

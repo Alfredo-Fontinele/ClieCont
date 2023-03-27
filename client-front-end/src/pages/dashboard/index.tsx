@@ -3,38 +3,25 @@ import {
     Container,
     Flex,
     List,
-    Modal,
-    ModalBody,
-    ModalCloseButton,
-    ModalContent,
-    ModalFooter,
-    ModalHeader,
-    ModalOverlay,
     Text,
     useDisclosure,
 } from "@chakra-ui/react";
 import { Contact } from "../../../../api-client-nodejs/src/entities/Contact";
 import { CardContactItem } from "./card-contact-item/index";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useLayoutEffect, useCallback } from "react";
 import { useApi } from "../../context/api-context";
 import { Colors } from "../../styles/colors";
-import { FormUpdate } from "./form-update";
 import { AddIcon } from "@chakra-ui/icons";
-import React from "react";
 import { ModalUpdate } from "./modal-update";
 import { ModalAdd } from "./modal-add/index";
+import { motion } from "framer-motion";
 
 export const Dashboard = () => {
-    const {
-        navigate,
-        getUserByTokenCookie,
-        getToken,
-        setUser,
-        user,
-        currentContact,
-        setCurrentContact,
-    } = useApi();
+    const { navigate, getUserByTokenCookie, setUser, user, currentContact } =
+        useApi();
     const [contacts, setContacts] = useState<Contact[]>([]);
+
+    document.title = `Dashboard`;
 
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -50,7 +37,7 @@ export const Dashboard = () => {
         setContacts(user.contacts);
     }, [contacts]);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         (async () => {
             await getUserByTokenCookie()
                 .then((user) => setUser(user))
@@ -87,37 +74,44 @@ export const Dashboard = () => {
                     isOpen={isAddModalOpen}
                     onClose={handleAddModalClose}
                 />
-                <List display={"flex"} gap={20} flexWrap={"wrap"}>
-                    {!!currentContact && (
-                        <ModalUpdate
-                            currentContact={currentContact}
-                            isOpen={isEditModalOpen}
-                            onClose={handleEditModalClose}
-                        />
-                    )}
-                    {user?.contacts.length ? (
-                        user.contacts.map(
-                            (contact) =>
-                                !!contact.is_active && (
-                                    <CardContactItem
-                                        key={contact.id}
-                                        contact={contact}
-                                        handleEditModalOpen={
-                                            handleEditModalOpen
-                                        }
-                                    />
-                                )
-                        )
-                    ) : (
-                        <Flex py={8}>
-                            <Text fontSize={22}>
-                                Bem-vindo à sua nova plataforma de criação de
-                                contatos! Sua dashboard está pronta para ser
-                                preenchida com suas informações de contato."
-                            </Text>
-                        </Flex>
-                    )}
-                </List>
+                <motion.ul
+                    initial={{ y: 50, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.5 }}
+                >
+                    <List display={"flex"} gap={20} flexWrap={"wrap"}>
+                        {!!currentContact && (
+                            <ModalUpdate
+                                currentContact={currentContact}
+                                isOpen={isEditModalOpen}
+                                onClose={handleEditModalClose}
+                            />
+                        )}
+                        {user?.contacts.length ? (
+                            user.contacts.map(
+                                (contact) =>
+                                    !!contact.is_active && (
+                                        <CardContactItem
+                                            key={contact.id}
+                                            contact={contact}
+                                            handleEditModalOpen={
+                                                handleEditModalOpen
+                                            }
+                                        />
+                                    )
+                            )
+                        ) : (
+                            <Flex py={8}>
+                                <Text fontSize={22}>
+                                    Bem-vindo à sua nova plataforma de criação
+                                    de contatos! Sua dashboard está pronta para
+                                    ser preenchida com suas informações de
+                                    contato."
+                                </Text>
+                            </Flex>
+                        )}
+                    </List>
+                </motion.ul>
             </Flex>
         </Container>
     );

@@ -10,14 +10,10 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
-
-interface IOption {
-    name: string;
-    href: string;
-}
+import { IItemMenuOptions } from "../../interfaces/others";
 
 interface IMenuItemProps {
-    options: IOption[];
+    options: IItemMenuOptions[];
 }
 
 export const MenuItems = ({ options }: IMenuItemProps) => {
@@ -32,7 +28,11 @@ export const MenuItems = ({ options }: IMenuItemProps) => {
                 />
                 <MenuList>
                     {options.map((option) => (
-                        <Link key={option.name} to={option.href}>
+                        <Link
+                            key={option.name}
+                            to={option.href}
+                            onClick={() => option.onClick()}
+                        >
                             <MenuItem fontWeight={"medium"} key={option.name}>
                                 {option.name}
                             </MenuItem>

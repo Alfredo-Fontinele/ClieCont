@@ -4,14 +4,45 @@ import { Flex, Text } from "@chakra-ui/react";
 import { ThemeIcon } from "../theme-icon";
 import { Link } from "react-router-dom";
 import { Colors } from "../../styles/colors";
+import { useApi } from "../../context/api-context";
 
-const optionsHeader: IItemMenuOptions[] = [
-    { name: "Home", href: "/" },
-    { name: "Login", href: "/login" },
-    { name: "Register", href: "/register" },
-];
+interface IHeaderProps {
+    currentTypePage: "default" | "dashboard";
+}
 
-export const Header = () => {
+export const Header = ({ currentTypePage }: IHeaderProps) => {
+    const { currentPage, setCurrentPage, deleteToken } = useApi();
+
+    const optionsHeader: IItemMenuOptions[] = [
+        { name: "Home", href: "/", onClick: () => setCurrentPage("Home") },
+        {
+            name: "Login",
+            href: "/login",
+            onClick: () => setCurrentPage("Login"),
+        },
+        {
+            name: "Register",
+            href: "/register",
+            onClick: () => setCurrentPage("Register"),
+        },
+    ];
+
+    const optionsHeaderDashboard: IItemMenuOptions[] = [
+        { name: "Home", href: "/", onClick: () => setCurrentPage("Home") },
+        {
+            name: "Sair",
+            href: "/login",
+            onClick: () => {
+                setCurrentPage("Login");
+                deleteToken();
+            },
+        },
+    ];
+
+    const handleItemClick = (onClick: Function) => {
+        onClick();
+    };
+
     return (
         <Flex
             justifyContent={"space-between"}
@@ -36,15 +67,31 @@ export const Header = () => {
                     gap={5}
                     display={{ base: "none", sm: "flex" }}
                 >
-                    {optionsHeader.map((option) => (
-                        <Link key={option.href} to={option.href}>
-                            <Text>{option.name}</Text>
-                        </Link>
-                    ))}
+                    {currentTypePage === "default"
+                        ? optionsHeader.map((option) => (
+                              <Link key={option.href} to={option.href}>
+                                  <Text>{option.name}</Text>
+                              </Link>
+                          ))
+                        : optionsHeaderDashboard.map((option) => (
+                              <Link
+                                  key={option.href}
+                                  to={option.href}
+                                  onClick={() =>
+                                      handleItemClick(option.onClick)
+                                  }
+                              >
+                                  <Text>{option.name}</Text>
+                              </Link>
+                          ))}
                 </Flex>
                 <ThemeIcon />
                 <Flex display={{ base: "flex", sm: "none" }}>
-                    <MenuItems options={optionsHeader} />
+                    {currentTypePage === "default" ? (
+                        <MenuItems options={optionsHeader} />
+                    ) : (
+                        <MenuItems options={optionsHeaderDashboard} />
+                    )}
                 </Flex>
             </Flex>
         </Flex>

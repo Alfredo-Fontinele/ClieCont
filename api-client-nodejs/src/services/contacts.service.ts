@@ -1,9 +1,9 @@
 import { IContactCreateRequest } from "../interfaces/contacts";
 import { contactRepo } from "../repositories/contact-repo";
 import { updateContactSchema } from "../schemas/contacts";
+import { DeleteResult, UpdateResult } from "typeorm";
 import { AppError } from "../errors/app-error";
 import { Contact } from "../entities/Contact";
-import { DeleteResult, UpdateResult } from "typeorm";
 import { Request } from "express";
 import "express-async-errors";
 

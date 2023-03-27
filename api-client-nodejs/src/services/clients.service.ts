@@ -79,16 +79,6 @@ export const ClientService = {
             },
         });
     },
-    async getByToken(req: Request) {
-        return await clientRepo.findOne({
-            where: {
-                id: req.clientFound.id,
-            },
-            relations: {
-                contacts: true,
-            },
-        });
-    },
     async update(req: Request) {
         const { id } = req.params;
         const validatedData = await updateClientSchema.validate(req.body, {

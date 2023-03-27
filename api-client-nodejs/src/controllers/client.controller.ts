@@ -18,10 +18,6 @@ export const ClientController = {
         const data = await ClientService.getById(req);
         return res.json(data);
     },
-    async getByToken(req: Request, res: Response) {
-        const data = await ClientService.getByToken(req);
-        return res.json(data);
-    },
     async update(req: Request, res: Response) {
         const data = await ClientService.update(req);
         return res.json(data);

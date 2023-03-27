@@ -23,6 +23,7 @@ import { useForm } from "react-hook-form";
 import { api } from "../../services/api";
 import { toast } from "react-toastify";
 import { setCookie } from "nookies";
+import { motion } from "framer-motion";
 
 const confetti = {
     light: {
@@ -51,6 +52,7 @@ const styleInputMaskPhone = {
 
 export const Login = () => {
     const { navigate, getToken, getUserByTokenCookie } = useApi();
+    document.title = "Login";
 
     useEffect(() => {
         (async () => {
@@ -125,47 +127,58 @@ export const Login = () => {
                         shadow="base"
                         w={"full"}
                     >
-                        <form onSubmit={handleSubmit(onSubmitFormLogin)}>
-                            <VStack spacing={5}>
-                                <Flex flexDir={"column"} w={"full"}>
-                                    <FormLabel>Email</FormLabel>
+                        <motion.ul
+                            initial={{ y: 50, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                        >
+                            <form onSubmit={handleSubmit(onSubmitFormLogin)}>
+                                <VStack spacing={5}>
+                                    <Flex flexDir={"column"} w={"full"}>
+                                        <FormLabel>Email</FormLabel>
 
-                                    <InputGroup>
-                                        <InputLeftElement
-                                            children={<MdOutlineEmail />}
+                                        <InputGroup>
+                                            <InputLeftElement
+                                                children={<MdOutlineEmail />}
+                                            />
+                                            <Input
+                                                type="email"
+                                                placeholder="Insira seu email"
+                                                {...register("email")}
+                                            />
+                                        </InputGroup>
+                                        {errors.email && (
+                                            <Error
+                                                text={errors.email.message}
+                                            />
+                                        )}
+                                    </Flex>
+
+                                    <Flex flexDir={"column"} w={"full"}>
+                                        <FormLabel>Senha</FormLabel>
+                                        <PasswordField
+                                            {...register("password")}
                                         />
-                                        <Input
-                                            type="email"
-                                            placeholder="Insira seu email"
-                                            {...register("email")}
-                                        />
-                                    </InputGroup>
-                                    {errors.email && (
-                                        <Error text={errors.email.message} />
-                                    )}
-                                </Flex>
+                                        {errors.password && (
+                                            <Error
+                                                text={errors.password.message}
+                                            />
+                                        )}
+                                    </Flex>
 
-                                <Flex flexDir={"column"} w={"full"}>
-                                    <FormLabel>Senha</FormLabel>
-                                    <PasswordField {...register("password")} />
-                                    {errors.password && (
-                                        <Error text={errors.password.message} />
-                                    )}
-                                </Flex>
-
-                                <Button
-                                    colorScheme="blue"
-                                    bg="blue.400"
-                                    color="white"
-                                    _hover={{
-                                        bg: "blue.500",
-                                    }}
-                                    type={"submit"}
-                                >
-                                    Entrar
-                                </Button>
-                            </VStack>
-                        </form>
+                                    <Button
+                                        colorScheme="blue"
+                                        bg="blue.400"
+                                        color="white"
+                                        _hover={{
+                                            bg: "blue.500",
+                                        }}
+                                        type={"submit"}
+                                    >
+                                        Entrar
+                                    </Button>
+                                </VStack>
+                            </form>
+                        </motion.ul>
                     </Box>
                 </Flex>
             </Box>

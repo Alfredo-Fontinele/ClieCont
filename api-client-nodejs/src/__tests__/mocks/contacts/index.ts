@@ -3,7 +3,7 @@ import { IContactCreateRequest } from "./../../../interfaces/contacts";
 export const MockedContactValid: IContactCreateRequest = {
     name: "teste1",
     email: "teste1@gmail.com",
-    phone: 123456,
+    phone: "(91) 98979-8979",
 };
 
 export const MockedContactInvalid = {
@@ -16,7 +16,7 @@ export const MockedContactInvalid = {
 export const MockedOtherContactValid: IContactCreateRequest = {
     name: "teste1",
     email: "teste1@gmail.com",
-    phone: 123456,
+    phone: "(91) 98979-8979",
 };
 
 export const MockedOtherContactInvalid = {

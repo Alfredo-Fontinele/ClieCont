@@ -8,49 +8,33 @@ import {
     useDisclosure,
     VStack,
 } from "@chakra-ui/react";
-import { api } from "../../../services/api";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { BsPerson, BsPhone } from "react-icons/bs";
 import { Error } from "../../../components/error";
 import { MdOutlineEmail } from "react-icons/md";
-import { PasswordField } from "../../../components/password-field";
 import { styleInputMaskPhone } from "../../register";
 import InputMask from "react-input-mask";
 import { useApi } from "../../../context/api-context";
 import { removeFalseValues } from "../../../utils/removeFalseValues";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { CreateContactSchema } from "../../../schemas/contacts.schema";
-import { useEffect, useState } from "react";
-import { Colors } from "../../../styles/colors";
-
-interface IDataBody {
-    name: string;
-    email: string;
-    phone: string;
-}
+import { useState } from "react";
+import { IContactCreateRequest } from "../../../interfaces/contacts";
 
 interface IFormAddProps {
     onClose: () => void;
 }
 
 export const FormAdd = ({ onClose }: IFormAddProps) => {
-    const {
-        getToken,
-        setUser,
-        createContact,
-        getClient,
-        currentContact,
-        deleteContact,
-        getUserByTokenCookie,
-        setContacts,
-    } = useApi();
+    const { getToken, setUser, createContact, getClient, setContacts } =
+        useApi();
     const [wantExclude, setWantExclude] = useState(false);
     const token = getToken();
 
     const onSubmitFormAdd = async (dataBody: {}) => {
         try {
-            const body: IDataBody = removeFalseValues(dataBody);
+            const body: IContactCreateRequest = removeFalseValues(dataBody);
             const createContactReq = await createContact(body, token);
             const clientFound = await getClient(
                 createContactReq.client.id,
