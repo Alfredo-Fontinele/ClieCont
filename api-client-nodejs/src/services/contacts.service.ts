@@ -3,7 +3,7 @@ import { contactRepo } from "../repositories/contact-repo";
 import { updateContactSchema } from "../schemas/contacts";
 import { AppError } from "../errors/app-error";
 import { Contact } from "../entities/Contact";
-import { UpdateResult } from "typeorm";
+import { DeleteResult, UpdateResult } from "typeorm";
 import { Request } from "express";
 import "express-async-errors";
 
@@ -54,10 +54,8 @@ export const ContactService = {
         await contactRepo.update(id, validatedData);
         return await this.findContactById(id);
     },
-    async delete(req: Request): Promise<UpdateResult> {
+    async delete(req: Request): Promise<DeleteResult> {
         const { id } = req.params;
-        return await contactRepo.update(id, {
-            is_active: false,
-        });
+        return await contactRepo.delete(id);
     },
 };

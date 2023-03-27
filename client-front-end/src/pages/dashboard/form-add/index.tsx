@@ -20,18 +20,9 @@ import InputMask from "react-input-mask";
 import { useApi } from "../../../context/api-context";
 import { removeFalseValues } from "../../../utils/removeFalseValues";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { UpdateContactSchema } from "../../../schemas/contacts.schema";
+import { CreateContactSchema } from "../../../schemas/contacts.schema";
 import { useEffect, useState } from "react";
-import {
-    IContactCreateRequest,
-    IContactUpdateRequest,
-} from "./../../../../../api-client-nodejs/src/interfaces/contacts";
 import { Colors } from "../../../styles/colors";
-
-interface IFormUpdateProps {
-    id: string;
-    onClose: () => void;
-}
 
 interface IDataBody {
     name: string;
@@ -39,31 +30,37 @@ interface IDataBody {
     phone: string;
 }
 
-export const FormUpdate = ({ id, onClose }: IFormUpdateProps) => {
+interface IFormAddProps {
+    onClose: () => void;
+}
+
+export const FormAdd = ({ onClose }: IFormAddProps) => {
     const {
         getToken,
         setUser,
-        updateContact,
+        createContact,
         getClient,
         currentContact,
+        deleteContact,
+        getUserByTokenCookie,
         setContacts,
     } = useApi();
-
+    const [wantExclude, setWantExclude] = useState(false);
     const token = getToken();
 
-    const onSubmitFormUpdate = async (dataBody: {}) => {
+    const onSubmitFormAdd = async (dataBody: {}) => {
         try {
             const body: IDataBody = removeFalseValues(dataBody);
-            const contactUpdatedById = await updateContact(body, id, token);
+            const createContactReq = await createContact(body, token);
             const clientFound = await getClient(
-                contactUpdatedById.client.id,
+                createContactReq.client.id,
                 token
             );
             setUser(clientFound);
             toast.success("Contato Atualizado com Sucesso");
             onClose();
         } catch {
-            toast.error("Ops. Algo deu errado");
+            toast.error("Ops. Verifique se esse contato já existe");
         }
     };
 
@@ -72,14 +69,11 @@ export const FormUpdate = ({ id, onClose }: IFormUpdateProps) => {
         handleSubmit,
         formState: { errors },
     } = useForm({
-        resolver: yupResolver(UpdateContactSchema),
+        resolver: yupResolver(CreateContactSchema),
     });
 
     return (
-        <form
-            onSubmit={handleSubmit(onSubmitFormUpdate)}
-            style={{ padding: 10 }}
-        >
+        <form onSubmit={handleSubmit(onSubmitFormAdd)} style={{ padding: 10 }}>
             <Flex flexDir={"column"} gap={7}>
                 <Flex flexDir={"column"} w={"full"} gap={5}>
                     <Flex flexDir={"column"} w={"full"}>
@@ -89,11 +83,11 @@ export const FormUpdate = ({ id, onClose }: IFormUpdateProps) => {
                             <InputLeftElement children={<BsPerson />} />
                             <Input
                                 type="text"
-                                defaultValue={currentContact?.name}
                                 placeholder="Insira seu nome"
                                 {...register("name")}
                             />
                         </InputGroup>
+                        {errors.name && <Error text={errors.name.message} />}
                     </Flex>
 
                     <Flex flexDir={"column"} w={"full"}>
@@ -103,11 +97,11 @@ export const FormUpdate = ({ id, onClose }: IFormUpdateProps) => {
                             <InputLeftElement children={<MdOutlineEmail />} />
                             <Input
                                 type="email"
-                                defaultValue={currentContact?.email}
                                 placeholder="Insira seu email"
                                 {...register("email")}
                             />
                         </InputGroup>
+                        {errors.email && <Error text={errors.email.message} />}
                     </Flex>
 
                     <Flex flexDir={"column"} w={"full"}>
@@ -115,26 +109,26 @@ export const FormUpdate = ({ id, onClose }: IFormUpdateProps) => {
                         <InputGroup>
                             <InputLeftElement children={<BsPhone />} />
                             <InputMask
-                                defaultValue={currentContact?.phone}
                                 {...register("phone")}
                                 mask="(99) 99999-9999"
                                 style={styleInputMaskPhone}
                                 placeholder={"Insira seu número"}
                             />
                         </InputGroup>
+                        {errors.phone && <Error text={errors.phone.message} />}
                     </Flex>
                 </Flex>
                 <Flex justifyContent={"center"} gap={10}>
                     <Button
-                        colorScheme="blue"
-                        bg="blue.400"
+                        colorScheme="green"
+                        bg="green.400"
                         color="white"
                         _hover={{
-                            bg: "blue.500",
+                            bg: "green.500",
                         }}
                         type={"submit"}
                     >
-                        Atualizar
+                        Criar Contato
                     </Button>
                 </Flex>
             </Flex>

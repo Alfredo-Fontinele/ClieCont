@@ -1,10 +1,11 @@
 import { Client } from "../../../api-client-nodejs/src/entities/Client";
+import { Contact } from "../../../api-client-nodejs/src/entities/Contact";
 import { createContext, useContext, useState } from "react";
 import { IChildren } from "./../interfaces/others";
 import { parseCookies, setCookie } from "nookies";
 import { useNavigate } from "react-router-dom";
 import { api } from "../services/api";
-import { Contact } from "./../../../api-client-nodejs/src/entities/Contact";
+import { IContactCreateRequest } from "../interfaces/contacts";
 
 interface IApiContext {
     navigate: (to: string) => void;
@@ -15,9 +16,13 @@ interface IApiContext {
     getUserByTokenCookie: () => Promise<Client>;
     setToken: (token: string) => void;
     getToken: () => string;
-    updateContact: (dataBody: any, id: string, token: string) => Promise<any>;
-    getClient: (id: string, token: string) => Promise<any>;
-    createContact: (body: any) => Promise<any>;
+    updateContact: (
+        dataBody: any,
+        id: string,
+        token: string
+    ) => Promise<Contact>;
+    getClient: (id: string, token: string) => Promise<Client>;
+    createContact: (body: any, token: string) => Promise<Contact>;
     deleteContact: (id: string, token: string) => Promise<any>;
     currentContact: Contact | undefined;
     setCurrentContact: React.Dispatch<
@@ -62,8 +67,15 @@ export const ApiProvider = ({ children }: IChildren) => {
         return userData;
     };
 
-    const createContact = async (body: any) => {
-        const { data } = await api.post("/contacts", body);
+    const createContact = async (
+        body: IContactCreateRequest,
+        token: string
+    ) => {
+        const { data } = await api.post("/contacts", body, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
         return data;
     };
 

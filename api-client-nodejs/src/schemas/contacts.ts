@@ -3,7 +3,7 @@ import * as yup from "yup";
 export const createContactSchema = yup.object().shape({
     name: yup.string().required(),
     email: yup.string().email().required(),
-    phone: yup.number().required(),
+    phone: yup.string().required(),
 });
 
 export const updateContactSchema = yup.object().shape({

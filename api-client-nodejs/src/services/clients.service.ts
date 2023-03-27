@@ -3,7 +3,7 @@ import { ILoginRequest } from "./../interfaces/clients";
 import { AppError } from "../errors/app-error";
 import { Client } from "./../entities/Client";
 import { compare, hash } from "bcryptjs";
-import { UpdateResult } from "typeorm";
+import { DeleteResult, UpdateResult } from "typeorm";
 import { Request } from "express";
 import {
     IClientCreateRequest,
@@ -107,10 +107,8 @@ export const ClientService = {
         }
         return await this.findClientById(id);
     },
-    async delete(req: Request): Promise<UpdateResult> {
+    async delete(req: Request): Promise<DeleteResult> {
         const { id } = req.params;
-        return await clientRepo.update(id, {
-            is_active: false,
-        });
+        return await clientRepo.delete(id);
     },
 };

@@ -9,3 +9,8 @@ export interface IItemMenuOptions {
     href: string;
     onClick?: Function;
 }
+
+export interface IModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+}

@@ -14,27 +14,17 @@ import { useApi } from "../../../context/api-context";
 
 interface ICardContactItemProps {
     contact: Contact;
-    isOpen: boolean;
-    onOpen: Function;
-    onClose: Function;
+    handleEditModalOpen: Function;
 }
 
 export const CardContactItem = ({
     contact,
-    isOpen,
-    onOpen,
-    onClose,
+    handleEditModalOpen,
 }: ICardContactItemProps) => {
     const { setCurrentContact } = useApi();
     const { colorMode } = useColorMode();
     return (
-        <Flex
-            onClick={() => {
-                setCurrentContact(contact);
-            }}
-            w="full"
-            maxW={400}
-        >
+        <Flex w="full" maxW={400}>
             <ListItem
                 bg={
                     colorMode === "dark"
@@ -57,7 +47,10 @@ export const CardContactItem = ({
                 justifyContent="space-between"
                 gap={5}
                 p={5}
-                onClick={() => onOpen()}
+                onClick={() => {
+                    setCurrentContact(contact);
+                    handleEditModalOpen();
+                }}
             >
                 <Flex alignItems={"center"} gap={5}>
                     <DragHandleIcon />

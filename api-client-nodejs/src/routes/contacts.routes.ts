@@ -20,6 +20,8 @@ contactRoutes.post(
     ContactController.create
 );
 
+contactRoutes.get("/", ContactController.getAll);
+
 contactRoutes.get(
     "/:id",
     verifyClientIsLogged,

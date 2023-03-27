@@ -15,11 +15,14 @@ import {
 } from "@chakra-ui/react";
 import { Contact } from "../../../../api-client-nodejs/src/entities/Contact";
 import { CardContactItem } from "./card-contact-item/index";
-import { useApi } from "../../context/api-context";
 import { useState, useEffect, useCallback } from "react";
+import { useApi } from "../../context/api-context";
+import { Colors } from "../../styles/colors";
 import { FormUpdate } from "./form-update";
 import { AddIcon } from "@chakra-ui/icons";
-import { Colors } from "../../styles/colors";
+import React from "react";
+import { ModalUpdate } from "./modal-update";
+import { ModalAdd } from "./modal-add/index";
 
 export const Dashboard = () => {
     const {
@@ -29,9 +32,18 @@ export const Dashboard = () => {
         setUser,
         user,
         currentContact,
+        setCurrentContact,
     } = useApi();
     const [contacts, setContacts] = useState<Contact[]>([]);
-    const { isOpen, onOpen, onClose } = useDisclosure();
+
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+
+    const handleEditModalOpen = () => setIsEditModalOpen(true);
+    const handleEditModalClose = () => setIsEditModalOpen(false);
+
+    const handleAddModalOpen = () => setIsAddModalOpen(true);
+    const handleAddModalClose = () => setIsAddModalOpen(false);
 
     const setClientContacts = useCallback(async () => {
         const user = await getUserByTokenCookie();
@@ -66,22 +78,22 @@ export const Dashboard = () => {
                             _hover={{
                                 borderColor: Colors.blueLight,
                             }}
+                            onClick={handleAddModalOpen}
                             borderRadius={8}
                         />
                     </Flex>
                 </Flex>
+                <ModalAdd
+                    isOpen={isAddModalOpen}
+                    onClose={handleAddModalClose}
+                />
                 <List display={"flex"} gap={20} flexWrap={"wrap"}>
                     {!!currentContact && (
-                        <Modal isOpen={isOpen} onClose={onClose}>
-                            <ModalOverlay />
-                            <ModalContent>
-                                <ModalHeader>Editar Contato</ModalHeader>
-                                <ModalCloseButton />
-                                <ModalBody>
-                                    <FormUpdate id={currentContact.id} />
-                                </ModalBody>
-                            </ModalContent>
-                        </Modal>
+                        <ModalUpdate
+                            currentContact={currentContact}
+                            isOpen={isEditModalOpen}
+                            onClose={handleEditModalClose}
+                        />
                     )}
                     {user?.contacts.length ? (
                         user.contacts.map(
@@ -90,21 +102,18 @@ export const Dashboard = () => {
                                     <CardContactItem
                                         key={contact.id}
                                         contact={contact}
-                                        isOpen={isOpen}
-                                        onClose={onClose}
-                                        onOpen={onOpen}
+                                        handleEditModalOpen={
+                                            handleEditModalOpen
+                                        }
                                     />
                                 )
                         )
                     ) : (
-                        <Flex w={"full"} flexDir={"column"} p={10} gap={20}>
-                            <Text fontSize={33}>
-                                Nenhuma Tecnologia foi Cadastrada ainda.
-                            </Text>
+                        <Flex py={8}>
                             <Text fontSize={22}>
-                                Quando criar suas tecnologias você pode clicar
-                                nos cards para removê-las ou atualizar seu
-                                status
+                                Bem-vindo à sua nova plataforma de criação de
+                                contatos! Sua dashboard está pronta para ser
+                                preenchida com suas informações de contato."
                             </Text>
                         </Flex>
                     )}

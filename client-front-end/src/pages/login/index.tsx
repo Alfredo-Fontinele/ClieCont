@@ -50,11 +50,17 @@ const styleInputMaskPhone = {
 };
 
 export const Login = () => {
-    const { navigate, getUserByTokenCookie } = useApi();
+    const { navigate, getToken, getUserByTokenCookie } = useApi();
 
     useEffect(() => {
         (async () => {
-            await getUserByTokenCookie().then(() => navigate("/dashboard"));
+            const token = getToken();
+            if (token) {
+                return await api
+                    .post("/clients/owner", { token })
+                    .then((res) => navigate("/dashboard"))
+                    .catch(() => false);
+            }
         })();
     }, []);
 

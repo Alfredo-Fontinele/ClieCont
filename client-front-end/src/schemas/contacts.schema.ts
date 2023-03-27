@@ -5,7 +5,6 @@ export const CreateContactSchema = yup.object().shape({
         .string()
         .email("email precisa ser um campo válido")
         .required("email é obrigatório"),
-    password: yup.string().required("senha é obrigatório"),
     name: yup.string().required("nome é obrigatório"),
     phone: yup
         .string()
@@ -18,7 +17,6 @@ export const CreateContactSchema = yup.object().shape({
 
 export const UpdateContactSchema = yup.object().shape({
     email: yup.string().email("email precisa ser um campo válido"),
-    password: yup.string(),
     name: yup.string(),
     phone: yup
         .string()
