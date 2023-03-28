@@ -29,7 +29,6 @@ interface IFormAddProps {
 export const FormAdd = ({ onClose }: IFormAddProps) => {
     const { getToken, setUser, createContact, getClient, setContacts } =
         useApi();
-    const [wantExclude, setWantExclude] = useState(false);
     const token = getToken();
 
     const onSubmitFormAdd = async (dataBody: {}) => {
