@@ -1,4 +1,4 @@
-# Client_Full_Stack
+# ClieCont
 
 <h1>Instruções para rodar o projeto</h1>
 <p>Este projeto consiste em uma aplicação web em Node.js com um cliente front-end em React. Siga os passos abaixo para executá-lo em sua máquina.</p>
