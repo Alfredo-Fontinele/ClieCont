@@ -16,16 +16,14 @@
         "test": "cross-env NODE_ENV=test SECRET_KEY=secret_key jest --verbose --runInBand",
         "start": "node dist/src/server.js"
     },
-    "devDependencies": {
+    "dependencies": {
         "@types/bcryptjs": "^2.4.2",
-        "@types/express": "^4.17.15",
+        "@types/express": "^4.17.17",
         "@types/jsonwebtoken": "^8.5.9",
         "@types/node": "^18.15.10",
         "@types/supertest": "^2.0.12",
         "ts-node-dev": "^2.0.0",
-        "typescript": "^4.7.4"
-    },
-    "dependencies": {
+        "typescript": "^4.7.4",
         "@types/jest": "^28.1.4",
         "bcryptjs": "2.4.3",
         "cors": "^2.8.5",
