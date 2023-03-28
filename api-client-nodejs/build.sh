@@ -3,6 +3,6 @@
 set -o errexit
 
 yarn
-yarn add typescript
+yarn add typescript -D
 yarn build
-yarn typeorm migration:run -d dist/src/data-source.js
+yarn typeorm migration:run -d dist/data-source.js
