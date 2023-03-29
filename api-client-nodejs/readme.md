@@ -2,11 +2,11 @@
 	CliCont API | API REST (Back-end)
 </h2>
 
-<li>A API está disponível em https://api-clie-cont.onrender.com</li>
-
 <p align = "center">
 Este é o backend da aplicação ClieCont API para gerenciamento de clientes e contatos.
 </p>
+
+<li>A API está disponível em https://api-clie-cont.onrender.com</li>
 
 <h2 align ='center'>Clientes (Endpoints)</h2>
 
