@@ -1,4 +1,4 @@
-import { Contact } from "./../../../api-client-nodejs/src/entities/Contact";
+import { Contact } from "../interfaces/entities";
 
 export interface IClientCreateRequest {
     name: string;
