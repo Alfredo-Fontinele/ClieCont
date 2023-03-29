@@ -1,5 +1,5 @@
-import { Client } from "../../../api-client-nodejs/src/entities/Client";
-import { Contact } from "../../../api-client-nodejs/src/entities/Contact";
+import { Client, Contact } from "../interfaces/entities";
+
 import { createContext, useContext, useState } from "react";
 import { IChildren } from "./../interfaces/others";
 import { parseCookies, setCookie, destroyCookie } from "nookies";

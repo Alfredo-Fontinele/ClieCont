@@ -6,7 +6,7 @@ import {
     Text,
     useDisclosure,
 } from "@chakra-ui/react";
-import { Contact } from "../../../../api-client-nodejs/src/entities/Contact";
+import { Contact } from "../../interfaces/entities";
 import { CardContactItem } from "./card-contact-item/index";
 import { useState, useEffect, useLayoutEffect, useCallback } from "react";
 import { useApi } from "../../context/api-context";
@@ -89,7 +89,7 @@ export const Dashboard = () => {
                         )}
                         {user?.contacts.length ? (
                             user.contacts.map(
-                                (contact) =>
+                                (contact: Contact) =>
                                     !!contact.is_active && (
                                         <CardContactItem
                                             key={contact.id}

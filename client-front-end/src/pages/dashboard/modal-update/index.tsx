@@ -9,7 +9,7 @@ import {
     Text,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { Contact } from "../../../../../api-client-nodejs/src/entities/Contact";
+import { Contact } from "../../../interfaces/entities";
 import { IModalProps } from "../../../interfaces/others";
 import { useApi } from "../../../context/api-context";
 import { Colors } from "../../../styles/colors";
