@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+    db:
+        image: postgres
+        container_name: db_api_clie_cont
+        restart: always
+        environment:
+            POSTGRES_USER: ${PGUSER}
+            POSTGRES_PASSWORD: ${PGPASSWORD}
+            POSTGRES_DB: ${PGDATABASE}
+        ports:
+            - 5432:5432
+        volumes:
+            - ./data/db_data:/var/lib/postgresql/data
+
+    api:
+        build:
+            context: .
+        restart: always
+        container_name: api_clie_cont
+        command: "yarn runner && yarn start"
+        environment:
+            NODE_ENV: ${NODE_ENV}
+            PGHOST: db
+            PGPORT: ${PGPORT}
+            PGUSER: ${PGUSER}
+            PGPASSWORD: ${PGPASSWORD}
+            PGDATABASE: ${PGDATABASE}
+            DATABASE_URL: ${DATABASE_URL}
+            SECRET_KEY: ${SECRET_KEY}
+        ports:
+            - 3000:3000
+        depends_on:
+            - db

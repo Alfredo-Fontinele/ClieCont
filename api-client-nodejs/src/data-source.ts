@@ -1,22 +1,22 @@
+import { createEntities1680125494957 } from "./migrations/1680125494957-createEntities";
 import { DataSource, DataSourceOptions } from "typeorm";
-import path from "path";
+import { Contact } from "./entities/Contact";
+import { Client } from "./entities/Client";
 import "reflect-metadata";
+import path from "path";
 import "dotenv/config";
 
 const setDataSourceConfig = (): DataSourceOptions => {
-    const entitiesPath: string = path.join(__dirname, "./entities/**.{js,ts}");
-    const migrationsPath: string = path.join(
-        __dirname,
-        "./migrations/**.{js,ts}"
-    );
+    const entitiesPath = [Client, Contact];
+    const migrationsPath = [createEntities1680125494957];
     const nodeEnv = process.env.NODE_ENV;
 
     if (nodeEnv === "production") {
         return {
             type: "postgres",
             url: process.env.DATABASE_URL,
-            entities: [entitiesPath],
-            migrations: [migrationsPath],
+            entities: entitiesPath,
+            migrations: migrationsPath,
         };
     }
 
@@ -25,7 +25,7 @@ const setDataSourceConfig = (): DataSourceOptions => {
             type: "sqlite",
             database: ":memory:",
             synchronize: true,
-            entities: [entitiesPath],
+            entities: entitiesPath,
         };
     }
 
@@ -38,8 +38,8 @@ const setDataSourceConfig = (): DataSourceOptions => {
         database: process.env.PGDATABASE,
         logging: true,
         synchronize: false,
-        entities: [entitiesPath],
-        migrations: [migrationsPath],
+        entities: entitiesPath,
+        migrations: migrationsPath,
     };
 };
 
