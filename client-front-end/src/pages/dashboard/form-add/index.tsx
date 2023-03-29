@@ -19,8 +19,8 @@ import { useApi } from "../../../context/api-context";
 import { removeFalseValues } from "../../../utils/removeFalseValues";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { CreateContactSchema } from "../../../schemas/contacts.schema";
-import { useState } from "react";
 import { IContactCreateRequest } from "../../../interfaces/contacts";
+import { IDataHandleSubmit } from "../../../interfaces/others";
 
 interface IFormAddProps {
     onClose: () => void;
@@ -31,7 +31,7 @@ export const FormAdd = ({ onClose }: IFormAddProps) => {
         useApi();
     const token = getToken();
 
-    const onSubmitFormAdd = async (dataBody: {}) => {
+    const onSubmitFormAdd = async (dataBody: IDataHandleSubmit) => {
         try {
             const body: IContactCreateRequest = removeFalseValues(dataBody);
             const createContactReq = await createContact(body, token);
@@ -42,7 +42,8 @@ export const FormAdd = ({ onClose }: IFormAddProps) => {
             setUser(clientFound);
             toast.success("Contato Atualizado com Sucesso");
             onClose();
-        } catch {
+        } catch (err) {
+            console.log(err);
             toast.error("Ops. Verifique se esse contato já existe");
         }
     };

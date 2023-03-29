@@ -31,7 +31,7 @@ export const CardContactItem = ({
                         ? Colors.chakra.gray700
                         : Colors.menuItem
                 }
-                color={Colors.white_gray1}
+                color={Colors.white_gray0}
                 display={"flex"}
                 textDecoration="none"
                 transition={"all 0.3s"}

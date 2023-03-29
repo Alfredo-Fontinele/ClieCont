@@ -16,6 +16,7 @@ import { useApi } from "../../../context/api-context";
 import { removeFalseValues } from "../../../utils/removeFalseValues";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { UpdateContactSchema } from "../../../schemas/contacts.schema";
+import { IDataHandleSubmit } from "../../../interfaces/others";
 
 interface IFormUpdateProps {
     id: string;
@@ -40,7 +41,7 @@ export const FormUpdate = ({ id, onClose }: IFormUpdateProps) => {
 
     const token = getToken();
 
-    const onSubmitFormUpdate = async (dataBody: {}) => {
+    const onSubmitFormUpdate = async (dataBody: IDataHandleSubmit) => {
         try {
             const body: IDataBody = removeFalseValues(dataBody);
             const contactUpdatedById = await updateContact(body, id, token);

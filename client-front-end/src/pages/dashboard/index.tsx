@@ -55,24 +55,22 @@ export const Dashboard = () => {
 
     return (
         <Container w={"full"} maxW={"8xl"} minH={"100vh"}>
-            <Flex w={"full"} p={6} flexDir={"column"} gap={10}>
+            <Flex w={"full"} py={8} flexDir={"column"} gap={10}>
                 <Flex justifyContent={"space-between"} alignItems={"center"}>
                     <Text fontWeight={500} fontSize={30}>
                         Olá, {user?.name}
                     </Text>
-                    <Flex>
-                        <AddIcon
-                            fontSize={50}
-                            p={4}
-                            cursor={"pointer"}
-                            border={`1px solid ${Colors.main}`}
-                            _hover={{
-                                borderColor: Colors.blueLight,
-                            }}
-                            onClick={handleAddModalOpen}
-                            borderRadius={8}
-                        />
-                    </Flex>
+                    <AddIcon
+                        fontSize={50}
+                        p={4}
+                        cursor={"pointer"}
+                        border={`1px solid ${Colors.main}`}
+                        _hover={{
+                            borderColor: Colors.blueLight,
+                        }}
+                        onClick={handleAddModalOpen}
+                        borderRadius={8}
+                    />
                 </Flex>
                 <ModalAdd
                     isOpen={isAddModalOpen}
@@ -83,7 +81,7 @@ export const Dashboard = () => {
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.5 }}
                 >
-                    <List display={"flex"} gap={20} flexWrap={"wrap"}>
+                    <List display={"flex"} gap={10} flexWrap={"wrap"}>
                         {!!currentContact && (
                             <ModalUpdate
                                 currentContact={currentContact}

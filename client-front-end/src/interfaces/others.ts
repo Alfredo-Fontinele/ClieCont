@@ -14,3 +14,7 @@ export interface IModalProps {
     isOpen: boolean;
     onClose: () => void;
 }
+
+export interface IDataHandleSubmit {
+    [x: string]: any;
+}

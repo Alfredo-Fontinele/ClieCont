@@ -11,7 +11,7 @@ interface IHeaderProps {
 }
 
 export const Header = ({ currentTypePage }: IHeaderProps) => {
-    const { currentPage, setCurrentPage, deleteToken } = useApi();
+    const { setCurrentPage, deleteToken } = useApi();
 
     const optionsHeader: IItemMenuOptions[] = [
         { name: "Home", href: "/", onClick: () => setCurrentPage("Home") },
@@ -21,7 +21,7 @@ export const Header = ({ currentTypePage }: IHeaderProps) => {
             onClick: () => setCurrentPage("Login"),
         },
         {
-            name: "Register",
+            name: "Cadastro",
             href: "/register",
             onClick: () => setCurrentPage("Register"),
         },
