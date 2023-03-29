@@ -4,7 +4,8 @@ export const CreateContactSchema = yup.object().shape({
     email: yup
         .string()
         .email("email precisa ser um campo válido")
-        .required("email é obrigatório"),
+        .required("email é obrigatório")
+        .typeError("Por favor, insira um endereço de email válido"),
     name: yup.string().required("nome é obrigatório"),
     phone: yup
         .string()
@@ -16,7 +17,10 @@ export const CreateContactSchema = yup.object().shape({
 });
 
 export const UpdateContactSchema = yup.object().shape({
-    email: yup.string().email("email precisa ser um campo válido"),
+    email: yup
+        .string()
+        .email("email precisa ser um campo válido")
+        .typeError("Por favor, insira um endereço de email válido"),
     name: yup.string(),
     phone: yup
         .string()

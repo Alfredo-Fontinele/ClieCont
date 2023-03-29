@@ -18,7 +18,7 @@ interface IApiContext {
     setUser: React.Dispatch<React.SetStateAction<Client | undefined>>;
     getUserByTokenCookie: () => Promise<Client>;
     setToken: (token: string) => void;
-    getToken: () => string;
+    getToken: () => string | null;
     deleteToken: () => void;
     updateContact: (
         dataBody: any,
@@ -47,14 +47,18 @@ export const ApiProvider = ({ children }: IChildren) => {
 
     const getUserByTokenCookie = async () => {
         const { token } = parseCookies();
-        return await api
-            .post("/clients/owner", { token })
-            .then((res) => res.data)
-            .catch(() => false);
+        const user = await api.post("/clients/owner", { token });
+        if (!user) {
+            return null;
+        }
+        return user.data;
     };
 
     const getToken = () => {
         const { token } = parseCookies();
+        if (!token) {
+            return null;
+        }
         return token;
     };
 

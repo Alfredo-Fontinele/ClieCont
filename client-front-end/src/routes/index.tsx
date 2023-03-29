@@ -11,7 +11,7 @@ export const RoutesGlobal = () => {
             <Route path={"login"} element={<Login />} />
             <Route path={"register"} element={<Register />} />
             <Route path={"dashboard"} element={<Dashboard />} />
-            {/* <Route path="*" element={<NotFound />} /> */}
+            <Route path="*" element={<Home />} />
         </Routes>
     );
 };

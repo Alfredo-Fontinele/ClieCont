@@ -56,12 +56,15 @@ export const Login = () => {
 
     useEffect(() => {
         (async () => {
-            const token = getToken();
-            if (token) {
-                return await api
-                    .post("/clients/owner", { token })
-                    .then((res) => navigate("/dashboard"))
-                    .catch(() => false);
+            try {
+                const token = getToken();
+                if (!token) {
+                    navigate("/login");
+                    return;
+                }
+                await api.post("/clients/owner", { token });
+            } catch {
+                navigate("/login");
             }
         })();
     }, []);

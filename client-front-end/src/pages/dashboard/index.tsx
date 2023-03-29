@@ -37,11 +37,15 @@ export const Dashboard = () => {
         setContacts(user.contacts);
     }, [contacts]);
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         (async () => {
-            await getUserByTokenCookie()
-                .then((user) => setUser(user))
-                .catch(() => navigate("/login"));
+            try {
+                const user = await getUserByTokenCookie();
+                setUser(user);
+                setContacts(user.contacts);
+            } catch {
+                navigate("/login");
+            }
         })();
     }, []);
 
@@ -87,8 +91,8 @@ export const Dashboard = () => {
                                 onClose={handleEditModalClose}
                             />
                         )}
-                        {user?.contacts.length ? (
-                            user.contacts.map(
+                        {contacts.length ? (
+                            contacts.map(
                                 (contact: Contact) =>
                                     !!contact.is_active && (
                                         <CardContactItem
