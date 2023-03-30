@@ -1,6 +1,6 @@
 # 📋 ClieCont
 
-- A aplicação está disponível em https://clie-cont.vercel.app/
+-   A aplicação está disponível em https://clie-cont.vercel.app/
 
 ## 🚀 Instruções para rodar o projeto
 
@@ -8,9 +8,9 @@ Este projeto consiste em uma aplicação web em Node.js com um cliente front-end
 
 ### 🔑 Pré-requisitos
 
-- PostgreSQL instalado na máquina
-- Arquivo `.env` configurado baseado no arquivo `.env.example`
-- Yarn instalado
+-   PostgreSQL instalado na máquina
+-   Arquivo `.env` configurado baseado no arquivo `.env.example`
+-   Yarn instalado
 
 ### 💻 Instalação
 

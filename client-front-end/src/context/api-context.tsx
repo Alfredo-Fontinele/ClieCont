@@ -1,7 +1,7 @@
 import { Client, Contact } from "../interfaces/entities";
 
 import { createContext, useContext, useState } from "react";
-import { IChildren } from "./../interfaces/others";
+import { IChildren, IDataHandleSubmit } from "./../interfaces/others";
 import { parseCookies, setCookie, destroyCookie } from "nookies";
 import { useNavigate } from "react-router-dom";
 import { api } from "../services/api";
@@ -21,12 +21,15 @@ interface IApiContext {
     getToken: () => string;
     deleteToken: () => void;
     updateContact: (
-        dataBody: any,
+        dataBody: IDataHandleSubmit,
         id: string,
         token: string
     ) => Promise<Contact>;
     getClient: (id: string, token: string) => Promise<Client>;
-    createContact: (body: any, token: string) => Promise<Contact>;
+    createContact: (
+        body: IContactCreateRequest,
+        token: string
+    ) => Promise<Contact>;
     deleteContact: (id: string, token: string) => Promise<Contact>;
     currentContact: Contact | undefined;
     setCurrentContact: React.Dispatch<

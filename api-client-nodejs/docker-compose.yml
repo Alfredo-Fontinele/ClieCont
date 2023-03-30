@@ -5,12 +5,14 @@ services:
         image: postgres
         container_name: db_api_clie_cont
         restart: always
+        expose:
+            - ${PGPORT}
         environment:
             POSTGRES_USER: ${PGUSER}
             POSTGRES_PASSWORD: ${PGPASSWORD}
             POSTGRES_DB: ${PGDATABASE}
         ports:
-            - 5432:5432
+            - ${PGPORT}:${PGPORT}
         volumes:
             - ./data/db_data:/var/lib/postgresql/data
 
@@ -30,6 +32,6 @@ services:
             DATABASE_URL: ${DATABASE_URL}
             SECRET_KEY: ${SECRET_KEY}
         ports:
-            - 3000:3000
+            - ${PORT}:${PORT}
         depends_on:
             - db

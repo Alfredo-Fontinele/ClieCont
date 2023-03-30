@@ -10,17 +10,17 @@ import {
     useColorModeValue,
     VStack,
 } from "@chakra-ui/react";
+import { PasswordField } from "../../components/password-field";
+import { RegisterSchema } from "../../schemas/register.schema";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useApi } from "../../context/api-context";
 import { BsPerson, BsPhone } from "react-icons/bs";
 import { MdOutlineEmail } from "react-icons/md";
-import { PasswordField } from "../../components/password-field";
-import InputMask from "react-input-mask";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { Error } from "../../components/error";
+import { useForm } from "react-hook-form";
+import InputMask from "react-input-mask";
 import { api } from "../../services/api";
-import { RegisterSchema } from "../../schemas/register.schema";
 import { toast } from "react-toastify";
-import { useApi } from "../../context/api-context";
 import { motion } from "framer-motion";
 
 const confetti = {

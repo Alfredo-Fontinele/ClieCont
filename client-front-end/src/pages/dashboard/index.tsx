@@ -81,14 +81,14 @@ export const Dashboard = () => {
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.5 }}
                 >
+                    {!!currentContact && (
+                        <ModalUpdate
+                            currentContact={currentContact}
+                            isOpen={isEditModalOpen}
+                            onClose={handleEditModalClose}
+                        />
+                    )}
                     <List display={"flex"} gap={10} flexWrap={"wrap"}>
-                        {!!currentContact && (
-                            <ModalUpdate
-                                currentContact={currentContact}
-                                isOpen={isEditModalOpen}
-                                onClose={handleEditModalClose}
-                            />
-                        )}
                         {contacts.length ? (
                             contacts.map(
                                 (contact: Contact) =>
