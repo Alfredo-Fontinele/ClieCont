@@ -8,6 +8,16 @@ Este projeto consiste em uma aplicação web em Node.js com um cliente front-end
 
 ### 🔑 Pré-requisitos
 
+<li> Caso você possua o Docker instalado na sua máquina:</li>
+
+1. Clone este projeto
+2. Rode `git checkout docker`
+3. Entre no diretório da api
+4. Configure o arquivo .env 
+5. Rode `docker compose up`
+
+<li>Caso não, existem os seguintes requisitos:</li>
+
 - PostgreSQL instalado na máquina
 - Arquivo `.env` configurado baseado no arquivo `.env.example`
 - Yarn instalado
