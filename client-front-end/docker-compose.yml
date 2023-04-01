@@ -1,10 +1,12 @@
 version: "3"
 
 services:
-    app:
+    client-front-end:
         build: .
+        expose: 5173
+        command: "npm install && npm run build && npm start"
         ports:
-            - 5173:5173
-        comands: "yarn dev"
+            - "5173:5173"
         volumes:
-            - .:/home/node/app
+            - .:/app
+            - /app/node_modules

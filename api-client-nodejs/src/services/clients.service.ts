@@ -1,9 +1,9 @@
 import { clientRepo } from "./../repositories/client-repo";
 import { ILoginRequest } from "./../interfaces/clients";
+import { DeleteResult, UpdateResult } from "typeorm";
 import { AppError } from "../errors/app-error";
 import { Client } from "./../entities/Client";
 import { compare, hash } from "bcryptjs";
-import { DeleteResult, UpdateResult } from "typeorm";
 import { Request } from "express";
 import {
     IClientCreateRequest,
