@@ -16,6 +16,7 @@ export const Colors = {
     white_gray1: "#AAA",
     white_gray2: "#BBB",
     white_gray3: "#CCC",
+    white_gray4: "#f2f2f2",
     chakra: {
         gray700: "var(--chakra-colors-gray-700)",
     },

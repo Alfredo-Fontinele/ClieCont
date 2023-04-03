@@ -12,17 +12,17 @@ import {
     VStack,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
-import { MdOutlineEmail, MdPassword } from "react-icons/md";
 import { PasswordField } from "../../components/password-field";
 import { LoginSchema } from "../../schemas/login.schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useApi } from "../../context/api-context";
+import { MdOutlineEmail } from "react-icons/md";
 import { Error } from "../../components/error";
 import { useForm } from "react-hook-form";
 import { api } from "../../services/api";
 import { toast } from "react-toastify";
-import { setCookie } from "nookies";
 import { motion } from "framer-motion";
+import { setCookie } from "nookies";
 
 const confetti = {
     light: {
@@ -45,16 +45,13 @@ export const Login = () => {
 
     useEffect(() => {
         (async () => {
-            try {
-                const token = getToken();
-                if (!token) {
-                    navigate("/login");
-                    return;
-                }
-                await api.post("/clients/owner", { token });
-            } catch {
-                navigate("/login");
+            const token = getToken();
+            if (!token) {
+                return;
             }
+            await api.post("/clients/owner", { token }).then((res) => {
+                navigate("/dashboard");
+            });
         })();
     }, []);
 

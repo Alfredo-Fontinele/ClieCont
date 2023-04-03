@@ -1,16 +1,14 @@
 import { Contact } from "../../../interfaces/entities";
 import {
     Flex,
-    Image,
-    Link,
     ListItem,
     Text,
     useColorMode,
 } from "@chakra-ui/react";
 import { EmailIcon, PhoneIcon, DragHandleIcon } from "@chakra-ui/icons";
-import { Colors } from "../../../styles/colors";
 import { formatPhoneNumber } from "../../../utils/formatPhoneNumber";
 import { useApi } from "../../../context/api-context";
+import { Colors } from "../../../styles/colors";
 
 interface ICardContactItemProps {
     contact: Contact;
@@ -55,11 +53,12 @@ export const CardContactItem = ({
                 <Flex alignItems={"center"} gap={5}>
                     <DragHandleIcon />
                     <Text
-                        fontSize="large"
                         fontWeight={"500"}
                         textOverflow={"ellipsis"}
                         overflow={"hidden"}
                         whiteSpace={"nowrap"}
+                        fontSize={16}
+                        color={Colors.white_gray4}
                     >
                         {contact.name ?? "Nome Não Informado"}
                     </Text>
@@ -67,11 +66,12 @@ export const CardContactItem = ({
                 <Flex alignItems={"center"} gap={5}>
                     <EmailIcon color={Colors.main} />
                     <Text
-                        fontSize="large"
                         fontWeight={"500"}
                         textOverflow={"ellipsis"}
                         overflow={"hidden"}
                         whiteSpace={"nowrap"}
+                        fontSize={16}
+                        color={Colors.white_gray4}
                     >
                         {contact.email ?? "Sem E-mail"}
                     </Text>
@@ -79,11 +79,12 @@ export const CardContactItem = ({
                 <Flex alignItems={"center"} gap={5}>
                     <PhoneIcon color={Colors.spring} />
                     <Text
-                        fontSize="large"
                         fontWeight={"500"}
                         textOverflow={"ellipsis"}
                         overflow={"hidden"}
                         whiteSpace={"nowrap"}
+                        fontSize={16}
+                        color={Colors.white_gray4}
                     >
                         {contact.phone
                             ? formatPhoneNumber(contact.phone)
