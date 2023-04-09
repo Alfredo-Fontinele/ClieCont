@@ -45,8 +45,13 @@ export const ModalUpdate = ({
         }
     };
 
+    const closeModal = () => {
+        onClose();
+        setWantExclude(false);
+    };
+
     return (
-        <Modal isOpen={isOpen} onClose={onClose}>
+        <Modal isOpen={isOpen} onClose={closeModal}>
             <ModalOverlay />
             <ModalContent>
                 <ModalHeader
