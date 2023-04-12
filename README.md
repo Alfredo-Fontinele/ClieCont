@@ -9,6 +9,7 @@ Este projeto consiste em uma aplicação web em Node.js com um cliente front-end
 ### 🔑 Pré-requisitos
 
 * Caso você possua o Docker instalado na sua máquina:
+* Obs: O Docker foi configurado no projeto após o início. Por isso ele está isolado na branch "docker"
 
 1. Clone este projeto
 2. Rode `git checkout docker`
