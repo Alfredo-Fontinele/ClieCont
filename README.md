@@ -1,6 +1,7 @@
 # 📋 ClieCont
 
 - A aplicação está disponível em https://clie-cont.vercel.app/
+- A API está disponível apenas em localhost
 
 ## 🚀 Instruções para rodar o projeto
 
